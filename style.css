@@ -76,7 +76,19 @@ p {
     font-family: 'Lacheyard', cursive;
     font-size: 48px;
     color: black;
+    position: relative;
+    display: inline-block;
     margin-bottom: 15px;
+}
+
+.content-box h1::after {
+    content: "";
+    display: block;
+    width: 70%;
+    height: 3px;
+    background: black;   /* underline color */
+    margin: 8px auto 0;
+    border-radius: 10px;
 }
 
 .content-box p {
