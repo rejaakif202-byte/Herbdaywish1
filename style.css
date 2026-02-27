@@ -62,3 +62,23 @@ p {
     font-size: 14px;
     opacity: 0.8;
 }
+
+.content-box {
+    background: white;
+    color: #5e2b97;
+    padding: 40px 30px;
+    border-radius: 20px;
+    max-width: 800px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.content-box h1 {
+    font-family: 'Lacheyard', cursive;
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.content-box p {
+    font-size: 20px;
+    line-height: 1.8;
+}
