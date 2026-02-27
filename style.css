@@ -76,21 +76,21 @@ p {
     font-family: 'Lacheyard', cursive;
     font-size: 48px;
     color: black;
+    margin-bottom: 15px;
     position: relative;
     display: inline-block;
-    margin-bottom: 15px;
 }
 
 .content-box h1::after {
     content: "";
-    display: block;
-    width: 70%;
-    height: 3px;
-    background: black;   /* underline color */
-    margin: 8px auto 0;
-    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -8px;
+    width: 60%;
+    height: 2px !important;   /* 👈 yaha height control hoga */
+    background: black;
 }
-
 .content-box p {
     font-size: 24px;
     color: black;
