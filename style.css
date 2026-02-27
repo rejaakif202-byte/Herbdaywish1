@@ -4,13 +4,17 @@
     font-weight: normal;
     font-style: normal;
 }
+
 body {
-    margin: 0;
-    font-family: 'Georgia', serif;
-    background: linear-gradient(135deg, #5e2b97, #c2185b, #ffb6c1);
-    color: white;
-    text-align: center;
-    min-height: 100vh;   /* Ye full screen height ke liye */
+margin: 0;
+height: 100vh;
+background:
+linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)),
+url("file_00000000f42c620a987754adeca98283.png");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
 }
 
 .container {
