@@ -75,11 +75,13 @@ p {
 .content-box h1 {
     font-family: 'Lacheyard', cursive;
     font-size: 48px;
+    color: black;
     margin-bottom: 15px;
 }
 
 .content-box p {
     font-size: 24px;
+    color: black;
     line-height: 1.8;
 }
 
