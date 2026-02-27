@@ -24,30 +24,31 @@ body {
 
 h1 {
     font-family: 'Lacheyard', cursive;
-    font-size: 60px;
+    font-size: 65px;
     font-weight: bold;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    margin-top: 40px;      /* 👈 Ye heading ko neeche layega */
+    margin-bottom: 15px;   /* 👈 Paragraph ke paas karega */
 }
 
 p {
     max-width: 750px;
-    margin: auto;
-    font-size: 22px;      /* Pehle 18 tha */
+    margin: 10px auto 20px auto;  /* 👈 Heading aur button ke beech balance */
+    font-size: 22px;
     line-height: 1.9;
-    font-weight: 500;     /* Thoda bold feel */
+    font-weight: 500;
 }
 
 .button {
     display: inline-block;
-    margin-top: 40px;
-    padding: 16px 40px;     /* Pehle 12px 30px tha */
+    margin-top: 15px;      /* 👈 Paragraph ke just neeche */
+    padding: 18px 45px;    /* 👈 Thoda aur bada */
     background: white;
     color: #5e2b97;
     text-decoration: none;
     border-radius: 40px;
     font-weight: bold;
-    font-size: 18px;        /* New add */
+    font-size: 20px;       /* 👈 Bigger text */
     transition: 0.3s;
 }
 
