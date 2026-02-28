@@ -105,7 +105,7 @@ textarea {
     width: 100%;
     max-width: 500px;
     height: 120px;
-    margin-top: -40px;
+    margin-top: 20px;   /* 👈 -40px hata ke positive karo */
     padding: 15px;
     border-radius: 15px;
     border: none;
