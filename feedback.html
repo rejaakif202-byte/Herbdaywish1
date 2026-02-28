@@ -9,13 +9,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 40px;
         }
 
+        .content-box {
+            text-align: center;
+        }
+
+        .content-box p {
+            margin-top: 8px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
         textarea {
-            width: 300px;
-            height: 120px;
+            width: 280px;
+            height: 110px;
             border-radius: 15px;
             padding: 10px;
             border: none;
@@ -23,7 +38,12 @@
         }
 
         .button {
-            margin-top: 10px;
+            padding: 8px 22px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -39,27 +59,29 @@
             <p>Tell me how you felt about this little surprise.</p>
         </div>
 
-        <!-- FORM START -->
-        <form action="https://formsubmit.co/ban2sarkar123@gmail.com" method="POST" onsubmit="return showMessage()">
+        <form 
+            action="https://formsubmit.co/ban2sarkar123@gmail.com" 
+            method="POST"
+            onsubmit="return showPopup()"
+        >
 
-            <!-- Hidden Settings -->
+            <!-- Hidden settings -->
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_subject" value="New Feedback Received 💌">
             <input type="hidden" name="_template" value="table">
 
-            <textarea
+            <textarea 
                 id="feedbackText"
                 name="message"
-                placeholder="Write your thoughts here..." 
+                placeholder="Write your thoughts here..."
                 required>
             </textarea>
 
-            <button type="YAHA CLICK KARDO 👀" class="button">
+            <button type="submit" class="button">
                 Submit
             </button>
 
         </form>
-        <!-- FORM END -->
 
     </div>
 
@@ -68,15 +90,15 @@
 </div>
 
 <script>
-function showMessage() {
+function showPopup() {
     var text = document.getElementById("feedbackText").value;
 
     if (text.trim() === "") {
         alert("Please write something first 💌");
         return false;
     } else {
-        alert("Thank you So So So muchhhh for sharing your thoughts 👀💖");
-        return true; // allow form to submit
+        alert("Thank you for sharing your thoughts 💖");
+        return true; 
     }
 }
 </script>
