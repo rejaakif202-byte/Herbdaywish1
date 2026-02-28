@@ -8,15 +8,14 @@
 <body>
 
 <div class="container">
-
     <div class="content-box">
-        <h1>Happy Bday My Foodie 😭💗</h1>
-        <p>
+        <h1 style="opacity: 0; visibility: hidden;">Happy Bday My Foodie 😭💗</h1>
+        <p style="opacity: 0; visibility: hidden;">
             Happiest birthday anshi my jaan my everything 😭 my love of my life 😭. finally wo day agaya jis din k liye maine itna wait kiya, kyuki me chahta tha ki is baar ka bday peechle wale sab bday se behtar ho 😭. Me bs chahta hu ki apka ye day bohut bohut acha jaye 😭❤️, and ye din pure saal ka sabse best day ho 😭💖. Me isi koshis me hu ki me apka bday ko behtar kar pau 😭👉👈. Kyuki kitna v sab ho jaye me to vul nhi paunga what happened previous year🤧. Meri wajeshe se sab kharab hua tha, so me chahta hu agar acha ho to meri wajeshe ho 🤧❤️. Me sache dil se chahunga apka sirf ye day hi nhi baki har day acha jaye 😭🫠, and me ye chahta hu ki aane wale har bday me, me apka sath de pau, jaise ki maine wadah kiya tha. 🤧 Ab wadah kiya h to nibhana to padega hi 😭. And ofc apke khushi k sath sath ye v chahunga ki aapki life ek healthy life me convert ho jaye 🤧, aap healthy raho khush rho 😭. Anshi apko jo chahiye ho wo apko mile 👀, everything you wish for 😭 sab kuch apko mile, and aap apne life me successful banpao 😭. At the end aur kuch nhi apke face pe bs ek sweet sa smile hi dekhna chahunga 👉👈😭. Hope aap ye padhte hue thode smile kiye honge 😭. Umm kuch jayda hi likhdiya 😭. Abhi k liye yehi khatam krta hu because iske bad or v baki h 😭.
         </p>
     </div>
 
-    <a href="confession.html" class="button">AB YAHA PE 👀</a>
+    <a href="confession.html" class="button" style="opacity: 0; visibility: hidden; transform: translateY(20px);">AB YAHA PE 👀</a>
 
     <div class="footer">A Special wish 😭 • Hope You Like It</div>
 </div>
@@ -24,93 +23,107 @@
 </body>
 
 <script>
-// --- Sparkle Animation Function (Same as index.html) ---
 function triggerSparkles(event) {
     const star = confetti.shapeFromPath({ path: 'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z' });
-
     confetti({
         shapes: [star],
         particleCount: 25,
         spread: 80,
-        origin: {
-            x: event.clientX / window.innerWidth,
-            y: event.clientY / window.innerHeight
-        },
+        origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
         colors: ['#ff4d6d', '#ffb6c1', '#ffd700', '#5e2b97'],
-        ticks: 200,
         gravity: 1.2,
-        scalar: 0.8,
-        drift: 0
+        scalar: 0.8
     });
 }
 
-function animateLetters(element, delayStart = 0) {
-    const text = element.textContent.trim();
-    element.textContent = "";
-    
-    element.classList.add("started");
+// FIXED: Word-break proof animation logic with callback
+function animateLetters(el, delay = 0, callback = null) {
+    const text = el.textContent.trim();
+    el.textContent = "";
+    el.style.opacity = "1";
+    el.style.visibility = "visible";
 
-    const letters = [...text]; 
+    const words = text.split(" ");
+    let totalLetterCount = 0;
 
-    letters.forEach((letter, index) => {
-        const span = document.createElement("span");
+    words.forEach((word, wordIndex) => {
+        const wordSpan = document.createElement("span");
+        wordSpan.style.display = "inline-block";
+        wordSpan.style.whiteSpace = "nowrap"; 
 
-        if (letter === " ") {
-            span.innerHTML = "&nbsp;";
-        } else {
-            span.textContent = letter;
+        const letters = [...word];
+        letters.forEach((l) => {
+            const s = document.createElement("span");
+            s.textContent = l;
+            s.style.display = "inline-block";
+            s.style.opacity = "0"; 
+            s.style.transform = "translateY(10px)";
+            s.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+            
+            wordSpan.appendChild(s);
+
+            setTimeout(() => {
+                s.style.opacity = "1";
+                s.style.transform = "translateY(0)";
+            }, delay + totalLetterCount * 30); // Speed thodi fast rakhi hai kyunki paragraph bada hai
+
+            totalLetterCount++;
+        });
+
+        el.appendChild(wordSpan);
+
+        if (wordIndex < words.length - 1) {
+            const space = document.createElement("span");
+            space.innerHTML = "&nbsp;";
+            space.style.display = "inline-block";
+            el.appendChild(space);
         }
-
-        span.style.display = "inline-flex";
-        span.style.opacity = "0";
-        span.style.transform = "translateY(10px)";
-        span.style.transition = "opacity 0.4s ease, transform 0.4s ease";
-        span.style.margin = "0";
-
-        element.appendChild(span);
-
-        setTimeout(() => {
-            span.style.opacity = "1";
-            span.style.transform = "translateY(0)";
-        }, delayStart + index * 50);
     });
 
-    return delayStart + letters.length * 50;
+    if (callback) {
+        setTimeout(callback, delay + totalLetterCount * 30 + 200);
+    }
 }
 
 window.addEventListener("load", () => {
     const title = document.querySelector(".content-box h1");
     const paragraph = document.querySelector(".content-box p");
+    const btn = document.querySelector(".button");
 
     if (title) {
-        let delayAfterTitle = animateLetters(title, 0);
-
-        setTimeout(() => {
+        // Step 1: Title shuru karo
+        animateLetters(title, 0, () => {
+            // Step 2: Underline draw karo
             title.classList.add("underline-grow");
             
-            if (paragraph) {
-                setTimeout(() => {
-                    animateLetters(paragraph, 0);
-                }, 500); 
-            }
-        }, delayAfterTitle + 200);
+            // Step 3: Paragraph shuru karo (800ms gap ke baad)
+            setTimeout(() => {
+                if (paragraph) {
+                    animateLetters(paragraph, 0, () => {
+                        // Step 4: Button show karo jab sab khatam ho jaye
+                        if (btn) {
+                            btn.style.opacity = "1";
+                            btn.style.visibility = "visible";
+                            btn.style.transform = "translateY(0)";
+                            btn.style.transition = "all 0.8s ease";
+                        }
+                    });
+                }
+            }, 800); 
+        });
     }
 
-    // --- Button Click Event for Sparkles ---
+    // Button Click Logic
     document.querySelectorAll('.button, button').forEach(btn => {
         btn.addEventListener('click', (e) => {
             triggerSparkles(e);
-
             if (btn.tagName === 'A') {
                 e.preventDefault();
                 const url = btn.getAttribute('href');
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 400); 
+                setTimeout(() => { window.location.href = url; }, 400); 
             }
         });
     });
 });
 </script>
-    
 </html>
