@@ -1,12 +1,19 @@
+/* =========================================
+   FONTS LOAD (SEPARATE BLOCKS)
+   ========================================= */
 @font-face {
     font-family: 'Signatra';
     src: url('Signatra.ttf') format('opentype');
-    font-family: 'BerlinSmallCaps';
-    src: url('BerlinSmallCaps.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
 }
 
+@font-face {
+    font-family: 'BerlinSmallCaps';
+    src: url('BerlinSmallCaps.ttf') format('truetype');
+}
+
+/* =========================================
+   BODY SETTINGS
+   ========================================= */
 body {
     margin: 0;
     height: 100vh;
@@ -21,7 +28,7 @@ body {
 }
 
 /* =========================================
-   PASSWORD OVERLAY (STAYS AS IS)
+   PASSWORD OVERLAY (NO CHANGES)
    ========================================= */
 #password-overlay {
     position: fixed;
@@ -47,40 +54,19 @@ body {
     text-align: center;
 }
 
-#password-overlay p {
-    color: #5e2b97;
-    font-family: sans-serif;
-    font-size: 22px;
-    margin-bottom: 35px;
-    font-weight: bold;
-}
-
 #password-overlay input {
     padding: 20px;
     border: 3px solid #ff4d6d;
     border-radius: 20px;
     text-align: center;
     font-size: 24px;
-    outline: none;
     width: 100%;
     max-width: 350px;
-    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2);
-}
-
-#password-overlay button {
-    margin-top: 30px;
-    padding: 20px 50px;
-    background: #ff4d6d;
-    color: white;
-    border: none;
-    border-radius: 40px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 22px;
+    outline: none;
 }
 
 /* =========================================
-   CONTAINER & EXPANDING CONTENT BOX
+   CONTENT BOX (SMOOTH EXPANSION)
    ========================================= */
 .container {
     min-height: 100vh;
@@ -92,120 +78,106 @@ body {
 }
 
 .content-box {
-    background: white;
-    color: #5e2b97;
+    background: #ffffff !important; /* Pure White Background */
     padding: 60px 40px;
     border-radius: 30px;
     max-width: 900px;
-    width: fit-content; /* Box content ke hisab se bada hoga */
-    min-width: 300px;  /* Shuruat mein chota box */
+    width: fit-content; 
+    min-width: 320px;
     min-height: 100px;
     box-shadow: 0 15px 45px rgba(0,0,0,0.2);
     text-align: center;
     box-sizing: border-box;
-    /* Box expansion transition */
-    transition: width 0.5s ease, height 0.5s ease, padding 0.5s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* Isse box smoothly bada hoga */
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+    overflow: hidden;
 }
 
-/* Shuruat mein text hidden rahega */
+/* =========================================
+   TEXT SETTINGS (FIXED COLOR & VISIBILITY)
+   ========================================= */
 .content-box h1, 
 .content-box p {
-    opacity: 0;
-    visibility: hidden;
+    color: #000000 !important; /* Force Black Text */
     margin: 0;
+    padding: 0;
+    opacity: 1; 
+    visibility: visible;
 }
 
 .content-box h1 {
-    font-family: 'Lacheyard', cursive;
-    font-size: 70px;
-    color: black;
-    display: inline-block;
+    font-family: serif; /* Fallback font */
+    font-size: 65px;
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    line-height: 1.2;
 }
 
 .content-box p {
-    font-size: 38px;
-    font-family: 'BerlinSmallCaps';
-    color: black;
+    font-family: 'BerlinSmallCaps', sans-serif;
+    font-size: 34px;
     line-height: 1.6;
-    text-align: center;
-    word-wrap: break-word;
-    white-space: normal;
     margin-top: 15px;
 }
 
-/* NO WORD BREAK SETTINGS */
+/* =========================================
+   ANIMATION SPANS (WORD-BREAK PROTECTION)
+   ========================================= */
 .content-box h1 span, 
 .content-box p span {
     display: inline-block !important;
     white-space: pre !important; 
-    margin: 0 !important;
-    padding: 0 !important;
-    opacity: 0; /* JS se animate hoga */
-    transform: translateY(10px);
+    color: #000000 !important; 
+    /* Shuruat mein hide honge JS trigger hone tak */
+    opacity: 0; 
+    transform: translateY(15px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Underline Growth Animation */
+.content-box h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    height: 4px;
+    width: 0;
+    background: #000000;
+    transition: width 0.8s ease-in-out;
+}
+
+.content-box h1.underline-grow::after {
+    width: 100%;
 }
 
 /* =========================================
    BUTTONS & FOOTER
    ========================================= */
-.button, button {
+.button {
     display: inline-block;
-    margin-top: 30px;
+    margin-top: 40px;
     padding: 22px 60px;
-    background: white;
-    font-family: 'BerlinSmallCaps';
-    color: #5e2b97;
+    background: #ff4d6d;
+    color: white !important;
     text-decoration: none;
     border-radius: 50px;
+    font-family: 'BerlinSmallCaps';
     font-weight: bold;
     font-size: 24px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: none;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.button:hover {
-    background: #ffb6c1;
-    color: white;
-    transform: translateY(-5px);
+    /* Hidden until JS shows it */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
 }
 
 .footer {
     margin-top: 80px;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: bold;
-    position: relative;
-    display: inline-block;
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.footer::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: white;
-    margin-top: 5px;
-}
-
-/* Underline Animation (JS se trigger hoga) */
-.content-box h1::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    height: 4px;
-    width: 0;
-    background: black;
-    transition: width 0.8s ease;
-}
-
-.content-box h1.underline-grow::after {
-    width: 100%;
 }
