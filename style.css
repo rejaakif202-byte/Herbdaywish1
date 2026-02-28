@@ -90,6 +90,7 @@ p {
 }
 
 .content-box h1 {
+    color: black;
     display: inline-block;   /* Important */
     position: relative;
 }
