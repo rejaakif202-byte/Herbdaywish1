@@ -8,16 +8,16 @@
 <body>
 <div id="password-overlay">
     <h2>Enter Secret Code 👀</h2>
-    <p style="color: #ff4d6d; font-family: sans-serif; font-size: 14px; margin-bottom: 10px;">Hint :- Wp ka chat lock pass</p>
+    <p style="color: #ff4d6d; font-family: sans-serif; font-size: 22px; margin-bottom: 10px;">Hint :- Wp ka chat lock pass</p>
     <input type="password" id="passInput" placeholder="Yaha password likho...">
-    <button onclick="checkPassword()">Unlock Surprise 🔓</button>
+    <button onclick="checkPassword()">unlock surprise 👀</button>
 </div>
 <div class="container">
     <div class="content-box">
         <h1 id="title">Welcome My Jaan Anshi 👀💋</h1>
         <p id="para">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
     </div>
-    <a href="wish.html" class="button" id="nextBtn" style="display: none;">YAHA CLICK KARO 👀</a>
+    <a href="wish.html" class="button" id="nextBtn">yaha click karo 👀</a>
     <div class="footer">A Special Msg 👀 • For My Heart</div>
 </div>
 </body>
@@ -25,9 +25,10 @@
 <script>
 const CORRECT_PASSWORD = "19031112";
 
-// Page load par hi text chupa do taaki blink na kare
+// CSS ke sath sync karne ke liye force hide on load
 document.getElementById("title").style.opacity = "0";
 document.getElementById("para").style.opacity = "0";
+document.getElementById("nextBtn").style.opacity = "0";
 
 function triggerSparkles(e){
     const s=confetti.shapeFromPath({path:'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z'});
@@ -43,20 +44,18 @@ function checkPassword(){
             startAnimations();
         },500);
     }else{
-        alert("Galat password! 😤");
+        alert("Galat password! 😤, Dobara Try Karo");
         document.getElementById("passInput").value="";
     }
 }
 
 function animateLetters(el, callback = null) {
-    const text = el.textContent.trim();
-    el.textContent = "";
-    
-    // Visibility ON karna
+    const text = el.innerText || el.textContent;
+    el.innerHTML = "";
     el.style.opacity = "1";
     el.style.visibility = "visible";
 
-    const words = text.split(" ");
+    const words = text.trim().split(/\s+/);
     let totalLetterCount = 0;
 
     words.forEach((word, wordIndex) => {
@@ -68,10 +67,8 @@ function animateLetters(el, callback = null) {
         letters.forEach((l) => {
             const s = document.createElement("span");
             s.textContent = l;
+            // CSS properties ko JS se override kar rahe hain trigger ke liye
             s.style.display = "inline-block";
-            s.style.opacity = "0"; 
-            s.style.transform = "translateY(10px)";
-            s.style.transition = "opacity 0.4s ease, transform 0.4s ease";
             
             wordSpan.appendChild(s);
 
@@ -94,7 +91,7 @@ function animateLetters(el, callback = null) {
     });
 
     if (callback) {
-        setTimeout(callback, totalLetterCount * 40 + 300);
+        setTimeout(callback, (totalLetterCount * 40) + 400);
     }
 }
 
@@ -103,14 +100,16 @@ function startAnimations() {
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
 
+    // Sequence: Title -> Underline -> Paragraph -> Button
     animateLetters(t, () => {
         t.classList.add("underline-grow");
         setTimeout(() => {
             animateLetters(p, () => {
-                b.style.display = "inline-block";
-                setTimeout(() => { b.style.opacity = "1"; }, 10);
+                // Button smooth appearance
+                b.style.opacity = "1";
+                b.style.transform = "translateY(0)";
             });
-        }, 700);
+        }, 800);
     });
 }
 
