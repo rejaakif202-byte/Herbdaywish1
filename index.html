@@ -29,6 +29,7 @@
 <script>
 const CORRECT_PASSWORD = "19031112";
 
+// Confetti Sparkles
 function triggerSparkles(event) {
     confetti({ 
         particleCount: 50, 
@@ -38,6 +39,7 @@ function triggerSparkles(event) {
     });
 }
 
+// Password Logic
 function checkPassword() {
     const input = document.getElementById("passInput").value;
     const overlay = document.getElementById("password-overlay");
@@ -56,44 +58,46 @@ function checkPassword() {
     }
 }
 
-// UPGRADED: Word-Safe Letter Animation
+// WORD-SAFE LETTER ANIMATION (Matches style.css)
 function animateLetters(el, callback) {
     const originalText = el.innerText;
     el.innerHTML = ""; 
 
-    // Pehle pure text ko words mein split karenge
+    // Splitting by words to prevent word-break
     const words = originalText.split(" ");
     
     words.forEach((word, wordIndex) => {
-        // Har word ke liye ek 'wrapper span' banayenge jo word ko tootne se rokega
+        // Wrapping each word in an inline-block span
         const wordWrapper = document.createElement("span");
         wordWrapper.style.display = "inline-block"; 
-        wordWrapper.style.whiteSpace = "nowrap"; // Word break protection
+        wordWrapper.style.whiteSpace = "nowrap"; 
 
-        // Word ke andar ke letters ko span mein dalenge
+        // Creating letters inside the word-wrapper
         [...word].forEach(char => {
             const letterSpan = document.createElement("span");
             letterSpan.innerHTML = char;
-            letterSpan.classList.add("reveal-span"); // Animation class
+            // Using reveal-span class for opacity control in CSS
+            letterSpan.classList.add("reveal-span"); 
             wordWrapper.appendChild(letterSpan);
         });
 
         el.appendChild(wordWrapper);
 
-        // Word ke baad space add karna (agar last word nahi hai toh)
+        // Space preservation
         if (wordIndex < words.length - 1) {
             const space = document.createElement("span");
             space.innerHTML = "&nbsp;";
+            space.style.display = "inline-block";
             el.appendChild(space);
         }
     });
 
-    // Saare letters ko ek saath select karke sequence mein reveal karna
+    // Selecting and revealing letters sequentially
     const allLetters = el.querySelectorAll(".reveal-span");
     let i = 0;
     const interval = setInterval(() => {
         if(i < allLetters.length) {
-            allLetters[i].classList.add("reveal"); 
+            allLetters[i].classList.add("reveal"); // Triggers CSS transition
             i++;
         } else {
             clearInterval(interval);
@@ -102,6 +106,7 @@ function animateLetters(el, callback) {
     }, 30);
 }
 
+// Animation order: Headline -> Underline -> Paragraph -> Button
 function startSequence() {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
@@ -117,6 +122,7 @@ function startSequence() {
     });
 }
 
+// Sparkle on Button Click & Redirect
 document.getElementById('nextBtn').addEventListener('click', function(e) {
     triggerSparkles(e);
     e.preventDefault();
@@ -124,6 +130,7 @@ document.getElementById('nextBtn').addEventListener('click', function(e) {
     setTimeout(() => { window.location.href = url; }, 600);
 });
 
+// Sparkle for password button
 document.querySelector('#password-overlay .button').addEventListener('click', (e) => {
     triggerSparkles(e);
 });
