@@ -36,10 +36,12 @@
             padding: 10px;
             border: none;
             outline: none;
+            font-family: inherit;
         }
 
         .button {
             padding: 8px 22px;
+            cursor: pointer;
         }
 
         .footer {
@@ -74,8 +76,7 @@
                 id="feedbackText"
                 name="message"
                 placeholder="Write your thoughts here..."
-                required>
-            </textarea>
+                required></textarea>
 
             <button type="submit" class="button">
                 Submit
@@ -88,8 +89,6 @@
     <div class="footer">Forever Yours My Sweetheart 💋</div>
 
 </div>
-
-</body>
 
 <script>
 // --- Sparkle Animation Function ---
@@ -112,10 +111,10 @@ function triggerSparkles(event) {
     });
 }
 
+// --- Letter Animation Logic ---
 function animateLetters(element, delayStart = 0) {
     const text = element.textContent.trim();
     element.textContent = "";
-    
     element.classList.add("started");
 
     const letters = [...text]; 
@@ -152,10 +151,8 @@ window.addEventListener("load", () => {
 
     if (title) {
         let delayAfterTitle = animateLetters(title, 0);
-
         setTimeout(() => {
             title.classList.add("underline-grow");
-            
             if (paragraph) {
                 setTimeout(() => {
                     animateLetters(paragraph, 0);
@@ -164,20 +161,27 @@ window.addEventListener("load", () => {
         }, delayAfterTitle + 200);
     }
 
-    // --- Special Submit Button Logic ---
+    // --- Validation + Sparkle + Form Submit ---
     const form = document.getElementById('feedbackForm');
+    const feedbackArea = document.getElementById('feedbackText');
     const submitBtn = document.querySelector('.button');
 
     submitBtn.addEventListener('click', (e) => {
-        // Validation check
-        if(document.getElementById('feedbackText').value.trim() === "") return;
+        // Step 1: Check if textarea is empty
+        if (feedbackArea.value.trim() === "") {
+            e.preventDefault(); // Form rok do
+            alert("Pehle kuch likho toh meri jaan! ✍️💖");
+            feedbackArea.focus();
+            return;
+        }
 
-        e.preventDefault(); // Pehle form submit hone se roko
-        triggerSparkles(e); // Sparkles dikhao
+        // Step 2: If not empty, trigger sparkles and wait to submit
+        e.preventDefault(); 
+        triggerSparkles(e); 
 
         setTimeout(() => {
-            form.submit(); // 0.5 sec baad form submit karo
-        }, 500);
+            form.submit(); 
+        }, 600);
     });
 });
 </script>
