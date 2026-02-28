@@ -146,20 +146,35 @@ textarea {
     text-align: left;
 }
 
-/* ===== LETTER ANIMATION PERFECT FIX ===== */
-
-.content-box h1 span,
+/* Taaki letters ke beech koi extra browser gap na rahe */
+.content-box h1 span, 
 .content-box p span {
-  opacity: 0;
-  display: inline-block;  /* inline-block wapas */
-  transform: translateY(15px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+    display: inline-flex !important;
+    margin: 0 !important;
+    letter-spacing: normal; /* Extra spacing block karne ke liye */
+    vertical-align: baseline;
 }
 
-/* punctuation ke liye special fix */
-.content-box h1 span.punc,
-.content-box p span.punc {
-  margin-left: -3px;
+/* Underline ki styling (Ensure this is in your CSS) */
+.content-box h1 {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.content-box h1::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0; /* Shuruat mein 0 rahegi */
+    height: 3px;
+    background-color: #ff4d6d; /* Aapka pasandida color */
+    transition: width 0.8s ease-in-out;
+}
+
+.content-box h1.underline-grow::after {
+    width: 100%; /* JS class add hone par grow hoga */
 }
 
 /* Underline full width animation */
