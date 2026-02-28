@@ -118,6 +118,7 @@ p {
     margin-top: 15px;
     padding: 18px 45px;
     background: white;
+    font-family: 'BerlinSmallCaps';
     color: #5e2b97;
     text-decoration: none;
     border-radius: 40px;
@@ -197,7 +198,7 @@ canvas {
 
 .content-box p {
     font-size: 32px;
-    font-family: 'Papernotes Bold';
+    font-family: 'BerlinSmallCaps';
     color: black;
     line-height: 1.8;
 }
