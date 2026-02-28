@@ -6,6 +6,14 @@
 </head>
 <body>
 
+<div id="password-overlay">
+    <h2>Enter Secret Code 👀</h2>
+    <p style="color: #ff4d6d; font-family: sans-serif; font-size: 14px; margin-bottom: 10px;">
+        Hint :- Wp ka chat lock pass
+    </p>
+    <input type="password" id="passInput" placeholder="Yaha password likho...">
+    <button onclick="checkPassword()">Unlock Surprise 🔓</button>
+</div>
 <div class="container">
 
     <div class="content-box">
@@ -27,8 +35,27 @@
 </body>
 
 <script>
+const CORRECT_PASSWORD = "19031112";
+
+// Password Check Function
+function checkPassword() {
+    const input = document.getElementById("passInput").value;
+    const overlay = document.getElementById("password-overlay");
+
+    if (input === CORRECT_PASSWORD) {
+        overlay.style.opacity = "0";
+        setTimeout(() => {
+            overlay.style.display = "none";
+            startAnimations(); // Sahi hone par hi animation shuru hoga
+        }, 500);
+    } else {
+        alert("Galat password hai meri sherni! 😤 Dobara try karo.");
+        document.getElementById("passInput").value = "";
+    }
+}
+
 function animateLetters(element, delayStart = 0) {
-    const text = element.textContent;
+    const text = element.textContent.trim();
     element.textContent = "";
     
     // Box ko visible karo animation shuru karne ke liye
@@ -63,7 +90,8 @@ function animateLetters(element, delayStart = 0) {
     return delayStart + letters.length * 50;
 }
 
-window.addEventListener("load", () => {
+// Ye function tab chalega jab password sahi hoga
+function startAnimations() {
     const title = document.querySelector(".content-box h1");
     const paragraph = document.querySelector(".content-box p");
 
@@ -83,6 +111,11 @@ window.addEventListener("load", () => {
             }
         }, delayAfterTitle + 200);
     }
+}
+
+// Window load par ab kuch nahi hoga, sirf wait karega
+window.addEventListener("load", () => {
+    // Animation wait karega checkPassword trigger hone ka
 });
 </script>
     
