@@ -1,183 +1,92 @@
-/* =========================================
-   FONTS LOAD (SEPARATE BLOCKS)
-   ========================================= */
 @font-face {
     font-family: 'Signatra';
     src: url('Signatra.ttf') format('opentype');
 }
-
 @font-face {
     font-family: 'BerlinSmallCaps';
     src: url('BerlinSmallCaps.ttf') format('truetype');
 }
 
-/* =========================================
-   BODY SETTINGS
-   ========================================= */
 body {
     margin: 0;
     height: 100vh;
-    background:
-    linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)),
-    url("file_00000000f42c620a987754adeca98283.png");
+    background: linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)), url("file_00000000f42c620a987754adeca98283.png");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow-x: hidden;
-}
-
-/* =========================================
-   PASSWORD OVERLAY (NO CHANGES)
-   ========================================= */
-#password-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff0f5; 
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 10000; 
-    transition: opacity 0.5s ease;
-    padding: 20px;
-}
-
-#password-overlay h2 {
-    color: #ff4d6d;
-    font-family: 'Signatra', cursive;
-    font-size: 70px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-#password-overlay input {
-    padding: 20px;
-    border: 3px solid #ff4d6d;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 24px;
-    width: 100%;
-    max-width: 350px;
-    outline: none;
-}
-
-/* =========================================
-   CONTENT BOX (SMOOTH EXPANSION)
-   ========================================= */
-.container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
 }
 
 .content-box {
-    background: #ffffff !important; /* Pure White Background */
-    padding: 60px 40px;
+    background: white;
+    padding: 40px;
     border-radius: 30px;
-    max-width: 900px;
-    width: fit-content; 
-    min-width: 320px;
-    min-height: 100px;
+    max-width: 800px;
+    width: 85%;
     box-shadow: 0 15px 45px rgba(0,0,0,0.2);
     text-align: center;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Isse box smoothly bada hoga */
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
     overflow: hidden;
 }
 
-/* =========================================
-   TEXT SETTINGS (FIXED COLOR & VISIBILITY)
-   ========================================= */
-.content-box h1, 
-.content-box p {
-    color: #000000 !important; /* Force Black Text */
-    margin: 0;
-    padding: 0;
-    opacity: 1; 
-    visibility: visible;
-}
+/* Text Base Styles */
+#title, #para { color: black; margin-bottom: 20px; }
+#title { font-family: serif; font-size: 50px; position: relative; display: inline-block; }
+#para { font-family: 'BerlinSmallCaps', sans-serif; font-size: 28px; line-height: 1.4; }
 
-.content-box h1 {
-    font-family: serif; /* Fallback font */
-    font-size: 65px;
-    position: relative;
-    margin-bottom: 30px;
-    line-height: 1.2;
-}
-
-.content-box p {
-    font-family: 'BerlinSmallCaps', sans-serif;
-    font-size: 34px;
-    line-height: 1.6;
-    margin-top: 15px;
-}
-
-/* =========================================
-   ANIMATION SPANS (WORD-BREAK PROTECTION)
-   ========================================= */
-.content-box h1 span, 
-.content-box p span {
-    display: inline-block !important;
-    white-space: pre !important; 
-    color: #000000 !important; 
-    /* Shuruat mein hide honge JS trigger hone tak */
-    opacity: 0; 
+/* Letters Animation */
+.content-box span {
+    display: inline-block;
+    opacity: 0;
     transform: translateY(15px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: all 0.4s ease;
 }
 
-/* Underline Growth Animation */
-.content-box h1::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-    height: 4px;
-    width: 0;
-    background: #000000;
-    transition: width 0.8s ease-in-out;
+.content-box span.reveal {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
 
-.content-box h1.underline-grow::after {
-    width: 100%;
-}
-
-/* =========================================
-   BUTTONS & FOOTER
-   ========================================= */
+/* ANIMATED BUTTON FIX */
 .button {
     display: inline-block;
-    margin-top: 40px;
-    padding: 22px 60px;
+    opacity: 0; /* Shuruat mein hide */
+    transform: translateY(30px); /* Neeche se aayega */
+    margin-top: 30px;
+    padding: 18px 45px;
     background: #ff4d6d;
     color: white !important;
     text-decoration: none;
     border-radius: 50px;
     font-family: 'BerlinSmallCaps';
+    font-size: 22px;
     font-weight: bold;
-    font-size: 24px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    /* Hidden until JS shows it */
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s ease;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
 }
 
-.footer {
-    margin-top: 80px;
-    font-size: 30px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+/* Button reveal class */
+.button.show-btn {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
+
+.button:hover {
+    transform: scale(1.05);
+    background: #ff758c;
+    box-shadow: 0 15px 30px rgba(255, 77, 109, 0.5);
+}
+
+/* Underline */
+#title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 4px;
+    width: 0;
+    background: #ff4d6d;
+    transition: width 0.8s ease;
+}
+#title.underline-grow::after { width: 100%; }
