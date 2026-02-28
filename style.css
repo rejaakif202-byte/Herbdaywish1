@@ -17,10 +17,11 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    overflow-x: hidden; /* Side scroll rokne ke liye */
 }
 
 /* =========================================
-   PASSWORD OVERLAY (NEW ADDITION)
+   PASSWORD OVERLAY (KEEPING AS IS)
    ========================================= */
 #password-overlay {
     position: fixed;
@@ -28,12 +29,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fff0f5; /* Light Pinkish background */
+    background: #fff0f5; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 10000; /* Sabse upar dikhega */
+    z-index: 10000; 
     transition: opacity 0.5s ease;
 }
 
@@ -109,7 +110,10 @@ p {
     font-weight: 500;
 }
 
-.button {
+/* =========================================
+   BUTTON ANIMATION (NEW SPARKLE EFFECT ADDED)
+   ========================================= */
+.button, button {
     display: inline-block;
     margin-top: 15px;
     padding: 18px 45px;
@@ -119,14 +123,35 @@ p {
     border-radius: 40px;
     font-weight: bold;
     font-size: 20px;
-    transition: 0.3s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.button:hover {
+.button:hover, button:hover {
     background: #ffb6c1;
     color: white;
+    transform: translateY(-3px); /* Hover par thoda upar */
+    box-shadow: 0 6px 20px rgba(255, 182, 193, 0.4);
 }
 
+.button:active, button:active {
+    transform: scale(0.9); /* Click karne par dabne wala effect */
+}
+
+/* Sparkle Canvas Settings - Yeh zaroori hai stars dikhane ke liye */
+canvas {
+    z-index: 10001 !important;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* =========================================
+   REST OF THE STYLES (UNCHANGED)
+   ========================================= */
 .footer {
     margin-top: 60px;
     font-size: 28px;
@@ -151,7 +176,7 @@ p {
     border-radius: 20px;
     max-width: 800px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    text-align: center; /* Center aligned content */
+    text-align: center;
 }
 
 .content-box h1 {
@@ -160,7 +185,7 @@ p {
     position: relative;
 }
 
-/* Punctuation Gap Fix - Inline Flex is best */
+/* Punctuation Gap Fix */
 .content-box h1 span, 
 .content-box p span {
     display: inline-flex !important;
