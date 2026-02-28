@@ -46,7 +46,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Password Input */
 #passInput {
     padding: 12px 20px;
     border-radius: 25px;
@@ -68,10 +67,10 @@ body {
     padding: 20px;
 }
 
-/* White Box - Fixed Center */
+/* White Box */
 .content-box {
     background: white;
-    padding: 30px 20px;
+    padding: 40px 30px;
     border-radius: 30px;
     width: 85%;
     max-width: 650px;
@@ -83,7 +82,7 @@ body {
     align-items: center;
 }
 
-/* Headline inside Box */
+/* Headline */
 #title {
     font-family: 'Signatra', serif;
     font-size: 50px;
@@ -103,37 +102,34 @@ body {
     background: black;
     transition: width 0.8s ease;
 }
-#title.underline-grow::after {
-    width: 100%;
-}
+#title.underline-grow::after { width: 100%; }
 
-/* Paragraph inside Box - WORD BREAK FIXED */
+/* Paragraph - WORD BREAK PROTECTION */
 #para {
     font-family: 'BerlinSmallCaps', sans-serif;
     font-size: 24px;
     color: black;
-    line-height: 1.4;
+    line-height: 1.6;
     text-align: center;
     width: 100%;
-    
-    /* In lines se word break hona band ho jayega */
     word-break: keep-all !important;
     overflow-wrap: normal !important;
-    white-space: normal;
     display: block;
 }
 
-/* Letter Animation Spans */
-span {
+/* LETTER ANIMATION CLASSES (VERY IMPORTANT) */
+/* Pehle spans invisible honge */
+.reveal-span {
     display: inline-block;
     opacity: 0;
     transform: translateY(10px);
     transition: all 0.3s ease;
-    /* Spans ke beech space maintain rakhta hai */
     white-space: pre; 
+    color: black;
 }
 
-span.reveal {
+/* Jab reveal class add hogi tab letters show honge */
+.reveal-span.reveal {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
@@ -154,12 +150,6 @@ span.reveal {
     opacity: 0; 
     transform: translateY(25px);
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3);
-}
-
-#password-overlay .button {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .button.show-btn {
@@ -173,29 +163,22 @@ span.reveal {
     box-shadow: 0 12px 25px rgba(255, 77, 109, 0.5);
 }
 
-.button:active {
-    transform: scale(0.95);
-    filter: brightness(1.2);
-}
-
-/* Footer Styling - Bada aur Extra Bold */
+/* Footer Styling */
 .footer {
     margin-top: 30px;
     color: black;
     font-family: 'BerlinSmallCaps', sans-serif;
-    font-size: 30px; /* Bada font */
-    font-weight: 900; /* Extra bold */
+    font-size: 30px;
+    font-weight: 900;
     text-align: center;
     width: 100%;
-    display: inline-block;
 }
 
 .footer::after {
     content: "";
     display: block;
-    width: 60%; /* Underline length adjust ki hai taaki sundar lage */
-    height: 4px; /* Thoda thick underline */
+    width: 60%;
+    height: 4px;
     background: black;
     margin: 5px auto 0 auto;
-    border-radius: 2px;
 }
