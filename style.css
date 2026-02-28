@@ -70,10 +70,10 @@ body {
 /* White Box */
 .content-box {
     background: white;
-    padding: 40px 30px;
+    padding: 35px 20px;
     border-radius: 30px;
     width: 85%;
-    max-width: 650px;
+    max-width: 450px;
     box-shadow: 0 15px 45px rgba(0,0,0,0.2);
     text-align: center;
     position: relative;
@@ -85,7 +85,7 @@ body {
 /* Headline */
 #title {
     font-family: 'Signatra', serif;
-    font-size: 50px;
+    font-size: 40px;
     color: black;
     display: inline-block;
     position: relative;
@@ -107,7 +107,7 @@ body {
 /* Paragraph - WORD BREAK PROTECTION */
 #para {
     font-family: 'BerlinSmallCaps', sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     color: black;
     line-height: 1.6;
     text-align: center;
@@ -136,14 +136,14 @@ body {
 
 /* Next Page Button */
 .button {
-    margin-top: 35px;
-    padding: 15px 45px;
+    margin-top: 25px;
+    padding: 12px 35px;
     background: #ff4d6d;
     color: white !important;
     text-decoration: none;
     border-radius: 50px;
     font-family: 'BerlinSmallCaps', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     border: none;
     cursor: pointer;
@@ -168,7 +168,7 @@ body {
     margin-top: 30px;
     color: black;
     font-family: 'BerlinSmallCaps', sans-serif;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 900;
     text-align: center;
     width: 100%;
