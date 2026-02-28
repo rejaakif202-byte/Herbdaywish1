@@ -104,4 +104,47 @@ function showPopup() {
 </script>
 
 </body>
+
+    <script>
+function animateLetters(element, delayStart = 0) {
+    const text = element.textContent;
+    element.textContent = "";
+    const letters = text.split("");
+
+    letters.forEach((letter, index) => {
+        const span = document.createElement("span");
+        span.textContent = letter;
+        element.appendChild(span);
+
+        setTimeout(() => {
+            span.style.opacity = "1";
+            span.style.transform = "translateY(0)";
+        }, delayStart + index * 50);
+    });
+
+    return delayStart + letters.length * 50;
+}
+
+window.addEventListener("load", () => {
+    const title = document.querySelector(".content-box h1");
+    const paragraph = document.querySelector(".content-box p");
+
+    let delay = 0;
+
+    if (title) {
+        delay = animateLetters(title, 0);
+
+        setTimeout(() => {
+            title.style.borderBottom = "3px solid white";
+        }, delay + 200);
+    }
+
+    if (paragraph) {
+        setTimeout(() => {
+            animateLetters(paragraph, 0);
+        }, delay + 600);
+    }
+});
+</script>
+    
 </html>
