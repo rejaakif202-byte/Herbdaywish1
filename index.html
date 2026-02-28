@@ -30,8 +30,10 @@
 function animateLetters(element, delayStart = 0) {
     const text = element.textContent;
     element.textContent = "";
+    
+    // Box ko visible karo animation shuru karne ke liye
+    element.classList.add("started");
 
-    // Emoji-safe split using spread operator
     const letters = [...text]; 
 
     letters.forEach((letter, index) => {
@@ -43,13 +45,12 @@ function animateLetters(element, delayStart = 0) {
             span.textContent = letter;
         }
 
-        // Inline-flex use karne se punctuation ke extra gaps khatam ho jate hain
+        // Inline styling for animation
         span.style.display = "inline-flex";
         span.style.opacity = "0";
         span.style.transform = "translateY(10px)";
         span.style.transition = "opacity 0.4s ease, transform 0.4s ease";
-        span.style.margin = "0"; // Extra space hatane ke liye
-        span.style.padding = "0";
+        span.style.margin = "0";
 
         element.appendChild(span);
 
@@ -67,20 +68,20 @@ window.addEventListener("load", () => {
     const paragraph = document.querySelector(".content-box p");
 
     if (title) {
-        // 1. Pehle Title animate hoga
+        // Step 1: Headline start
         let delayAfterTitle = animateLetters(title, 0);
 
-        // 2. Title khatam hone ke baad Underline ayegi
+        // Step 2: Underline (Headline khatam hone ke baad)
         setTimeout(() => {
             title.classList.add("underline-grow");
             
-            // 3. Underline shuru hone ke thodi der baad Paragraph shuru hoga
+            // Step 3: Paragraph (Underline ke thodi der baad)
             if (paragraph) {
                 setTimeout(() => {
                     animateLetters(paragraph, 0);
-                }, 400); // Underline ke saath smooth overlap ke liye
+                }, 500); 
             }
-        }, delayAfterTitle + 100);
+        }, delayAfterTitle + 200);
     }
 });
 </script>
