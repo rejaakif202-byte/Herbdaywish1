@@ -607,7 +607,7 @@ window.addEventListener("load", () => {
     }
 });
 
-    function animateLetters(elementId) {
+function animateLetters(elementId) {
   const textElement = document.getElementById(elementId);
   const text = textElement.innerText;
   textElement.innerHTML = "";
@@ -615,20 +615,24 @@ window.addEventListener("load", () => {
   let delay = 0;
 
   for (let char of text) {
+
     if (char === " ") {
       textElement.innerHTML += " ";
       continue;
     }
 
-    if (char === "," || char === "." || char === "!" || char === "?") {
-      textElement.innerHTML += `<span class="no-gap" style="animation-delay:${delay}s">${char}</span>`;
+    if (",.!?".includes(char)) {
+      textElement.innerHTML += 
+        `<span class="punc" style="animation-delay:${delay}s">${char}</span>`;
       continue;
     }
 
-    textElement.innerHTML += `<span style="animation-delay:${delay}s">${char}</span>`;
+    textElement.innerHTML += 
+      `<span style="animation-delay:${delay}s">${char}</span>`;
+
     delay += 0.05;
   }
-    }
+}
     
 </script>
     
