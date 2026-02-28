@@ -40,8 +40,21 @@
         }
 
         .button {
-            padding: 8px 22px;
+            padding: 12px 30px;
             cursor: pointer;
+            border: none;
+            background: white;
+            color: #5e2b97;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #ffb6c1;
+            color: white;
         }
 
         .footer {
@@ -78,7 +91,7 @@
                 placeholder="Write your thoughts here..."
                 required></textarea>
 
-            <button type="submit" class="button">
+            <button type="submit" id="submitBtn" class="button">
                 Submit
             </button>
 
@@ -121,19 +134,15 @@ function animateLetters(element, delayStart = 0) {
 
     letters.forEach((letter, index) => {
         const span = document.createElement("span");
-
         if (letter === " ") {
             span.innerHTML = "&nbsp;";
         } else {
             span.textContent = letter;
         }
-
         span.style.display = "inline-flex";
         span.style.opacity = "0";
         span.style.transform = "translateY(10px)";
         span.style.transition = "opacity 0.4s ease, transform 0.4s ease";
-        span.style.margin = "0";
-
         element.appendChild(span);
 
         setTimeout(() => {
@@ -161,27 +170,34 @@ window.addEventListener("load", () => {
         }, delayAfterTitle + 200);
     }
 
-    // --- Validation + Sparkle + Form Submit ---
+    // --- Fixed Validation + Sparkle + Form Submit ---
     const form = document.getElementById('feedbackForm');
     const feedbackArea = document.getElementById('feedbackText');
-    const submitBtn = document.querySelector('.button');
+    const submitBtn = document.getElementById('submitBtn');
 
-    submitBtn.addEventListener('click', (e) => {
-        // Step 1: Check if textarea is empty
+    form.addEventListener('submit', function(e) {
+        // Validation check
         if (feedbackArea.value.trim() === "") {
-            e.preventDefault(); // Form rok do
+            e.preventDefault();
             alert("Pehle kuch likho toh meri jaan! ✍️💖");
             feedbackArea.focus();
-            return;
+            return false;
         }
 
-        // Step 2: If not empty, trigger sparkles and wait to submit
+        // Agar sab sahi hai toh sparkles dikhao aur fir submit karo
         e.preventDefault(); 
-        triggerSparkles(e); 
+        triggerSparkles({
+            clientX: window.innerWidth / 2,
+            clientY: window.innerHeight / 2
+        }); 
+
+        // Button ko disable kar rahe hain taaki baar baar click na ho
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Sending...";
 
         setTimeout(() => {
             form.submit(); 
-        }, 600);
+        }, 1000);
     });
 });
 </script>
