@@ -9,7 +9,8 @@
 </head>
 <body>
 
-    <div class="container" style="display: flex;"> <div class="content-box">
+    <div class="container" style="display: flex;"> 
+        <div class="content-box">
             <h1 id="title">Happy Bday My Foodie 😭💗</h1>
             
             <p id="para">
@@ -23,7 +24,7 @@
     </div>
 
 <script>
-// Sparkles/Confetti Function
+// Sparkles Function
 function triggerSparkles(event) {
     confetti({ 
         particleCount: 50, 
@@ -33,57 +34,67 @@ function triggerSparkles(event) {
     });
 }
 
-// Letter Animation Function (No word breaks)
+// Word-Safe Letter Animation
 function animateLetters(el, callback) {
     const originalText = el.innerText || el.textContent;
     el.innerHTML = ""; 
+
+    const words = originalText.split(" ");
     
-    // Character by character without breaking words
-    [...originalText].forEach(char => {
-        const span = document.createElement("span");
-        span.innerHTML = char === " " ? "&nbsp;" : char;
-        el.appendChild(span);
+    words.forEach((word, wordIndex) => {
+        // Protect words from breaking
+        const wordWrapper = document.createElement("span");
+        wordWrapper.style.display = "inline-block"; 
+        wordWrapper.style.whiteSpace = "nowrap"; 
+
+        [...word].forEach(char => {
+            const letterSpan = document.createElement("span");
+            letterSpan.innerHTML = char;
+            // Matches .reveal-span in CSS
+            letterSpan.classList.add("reveal-span"); 
+            wordWrapper.appendChild(letterSpan);
+        });
+
+        el.appendChild(wordWrapper);
+
+        if (wordIndex < words.length - 1) {
+            const space = document.createElement("span");
+            space.innerHTML = "&nbsp;";
+            space.style.display = "inline-block";
+            el.appendChild(space);
+        }
     });
 
-    const spans = el.querySelectorAll("span");
+    const allLetters = el.querySelectorAll(".reveal-span");
     let i = 0;
     const interval = setInterval(() => {
-        if(i < spans.length) {
-            spans[i].classList.add("reveal");
+        if(i < allLetters.length) {
+            allLetters[i].classList.add("reveal"); // Triggers CSS transition
             i++;
         } else {
             clearInterval(interval);
             if(callback) callback();
         }
-    }, 15); // Adjust speed for long text
+    }, 25); 
 }
 
-// Start sequence on page load
+// Sequence trigger
 window.onload = () => {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
 
-    // Clear initial view
-    t.style.opacity = "1";
-    p.style.opacity = "1";
-
-    // 1. Title Animation
     animateLetters(t, () => {
-        // 2. Underline animation
         t.classList.add("underline-grow");
-        
         setTimeout(() => {
-            // 3. Paragraph Animation
             animateLetters(p, () => {
-                // 4. Button Animation
                 b.classList.add("show-btn");
             });
         }, 600);
     });
 };
 
-// Button Click & Sparkle
+// Button logic
 document.getElementById('nextBtn').addEventListener('click', function(e) {
     triggerSparkles(e);
     e.preventDefault();
