@@ -3,6 +3,7 @@
 <head>
 <title>MyJaanAnshi</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
@@ -37,6 +38,28 @@
 <script>
 const CORRECT_PASSWORD = "19031112";
 
+// --- Sparkle Animation Function ---
+function triggerSparkles(event) {
+    const scalar = 2;
+    // Star shape definition
+    const star = confetti.shapeFromPath({ path: 'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z' });
+
+    confetti({
+        shapes: [star],
+        particleCount: 25,
+        spread: 80,
+        origin: {
+            x: event.clientX / window.innerWidth,
+            y: event.clientY / window.innerHeight
+        },
+        colors: ['#ff4d6d', '#ffb6c1', '#ffd700', '#5e2b97'],
+        ticks: 200,
+        gravity: 1.2,
+        scalar: 0.8,
+        drift: 0
+    });
+}
+
 // Password Check Function
 function checkPassword() {
     const input = document.getElementById("passInput").value;
@@ -46,7 +69,7 @@ function checkPassword() {
         overlay.style.opacity = "0";
         setTimeout(() => {
             overlay.style.display = "none";
-            startAnimations(); // Sahi hone par hi animation shuru hoga
+            startAnimations(); 
         }, 500);
     } else {
         alert("Galat password hai meri bachiiii! 😤 Dobara try karo.");
@@ -57,8 +80,6 @@ function checkPassword() {
 function animateLetters(element, delayStart = 0) {
     const text = element.textContent.trim();
     element.textContent = "";
-    
-    // Box ko visible karo animation shuru karne ke liye
     element.classList.add("started");
 
     const letters = [...text]; 
@@ -72,7 +93,6 @@ function animateLetters(element, delayStart = 0) {
             span.textContent = letter;
         }
 
-        // Inline styling for animation
         span.style.display = "inline-flex";
         span.style.opacity = "0";
         span.style.transform = "translateY(10px)";
@@ -90,20 +110,14 @@ function animateLetters(element, delayStart = 0) {
     return delayStart + letters.length * 50;
 }
 
-// Ye function tab chalega jab password sahi hoga
 function startAnimations() {
     const title = document.querySelector(".content-box h1");
     const paragraph = document.querySelector(".content-box p");
 
     if (title) {
-        // Step 1: Headline start
         let delayAfterTitle = animateLetters(title, 0);
-
-        // Step 2: Underline (Headline khatam hone ke baad)
         setTimeout(() => {
             title.classList.add("underline-grow");
-            
-            // Step 3: Paragraph (Underline ke thodi der baad)
             if (paragraph) {
                 setTimeout(() => {
                     animateLetters(paragraph, 0);
@@ -113,9 +127,27 @@ function startAnimations() {
     }
 }
 
-// Window load par ab kuch nahi hoga, sirf wait karega
+// --- Button Click Event for Sparkles ---
+document.addEventListener("DOMContentLoaded", () => {
+    // Sabhi buttons aur links par click listener lagana
+    document.querySelectorAll('.button, button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            triggerSparkles(e);
+
+            // Agar link hai toh thoda delay karke redirect karega
+            if (btn.tagName === 'A') {
+                e.preventDefault();
+                const url = btn.getAttribute('href');
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 400); 
+            }
+        });
+    });
+});
+
 window.addEventListener("load", () => {
-    // Animation wait karega checkPassword trigger hone ka
+    // Initial wait for password
 });
 </script>
     
