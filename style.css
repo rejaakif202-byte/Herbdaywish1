@@ -1,8 +1,8 @@
 @font-face {
     font-family: 'Signatra';
     src: url('Signatra.ttf') format('opentype');
-    font-family: 'Milky Matcha';
-    src: url('Milky Matcha.otf') format('truetype');
+    font-family: 'Papernotes Bold';
+    src: url('Papernotes Bold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -106,7 +106,7 @@ p {
 
 .content-box p {
     font-size: 24px;
-    font-family: 'Milky Matcha';
+    font-family: 'Papernotes Bold';
     color: black;
     line-height: 1.8;
 }
