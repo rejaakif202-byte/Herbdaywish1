@@ -146,27 +146,22 @@ textarea {
     text-align: left;
 }
 
-/* ===== GLOBAL TEXT ANIMATION ===== */
+/* ===== LETTER ANIMATION CSS ===== */
 
-@keyframes fadeSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.content-box h1 span,
+.content-box p span {
+    opacity: 0;
+    display: inline-block;
+    transform: translateY(15px);
+    transition: all 0.3s ease;
 }
 
-h1, h2, h3 {
-    animation: fadeSlideUp 1s ease forwards;
-}
-
-p {
-    animation: fadeSlideUp 1.2s ease forwards;
-}
-
-.footer {
-    animation: fadeSlideUp 1.4s ease forwards;
+.content-box h1::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 3px;
+    background: black;
+    margin: 8px auto 0;
+    transition: width 0.8s ease;
 }
