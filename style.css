@@ -146,22 +146,32 @@ textarea {
     text-align: left;
 }
 
-/* ===== LETTER ANIMATION CSS ===== */
+/* ===== LETTER ANIMATION FIXED ===== */
 
 .content-box h1 span,
 .content-box p span {
     opacity: 0;
     display: inline-block;
     transform: translateY(15px);
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Underline full width animation */
+.content-box h1 {
+    position: relative;
 }
 
 .content-box h1::after {
     content: "";
-    display: block;
-    width: 0;
+    position: absolute;
+    left: 0;
+    bottom: -8px;
     height: 3px;
+    width: 0;
     background: black;
-    margin: 8px auto 0;
     transition: width 0.8s ease;
+}
+
+.content-box h1.underline-grow::after {
+    width: 100%;
 }
