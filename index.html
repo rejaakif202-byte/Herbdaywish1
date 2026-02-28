@@ -14,10 +14,10 @@
 </div>
 <div class="container">
     <div class="content-box">
-        <h1>Welcome My Jaan Anshi 👀💋</h1>
-        <p>ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
+        <h1 style="opacity: 0; visibility: hidden;">Welcome My Jaan Anshi 👀💋</h1>
+        <p style="opacity: 0; visibility: hidden;">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
     </div>
-    <a href="wish.html" class="button">YAHA CLICK KARO 👀</a>
+    <a href="wish.html" class="button" style="opacity: 0; visibility: hidden;">YAHA CLICK KARO 👀</a>
     <div class="footer">A Special Msg 👀 • For My Heart</div>
 </div>
 </body>
@@ -44,24 +44,20 @@ function checkPassword(){
     }
 }
 
-function animateLetters(el, delay = 0) {
+// Sequence handle karne ke liye callback add kiya gaya hai
+function animateLetters(el, delay = 0, callback = null) {
     const text = el.textContent.trim();
     el.textContent = "";
-    
-    // Force visibility taaki text gayab na ho
     el.style.opacity = "1";
     el.style.visibility = "visible";
-    el.classList.add("started");
 
     const words = text.split(" ");
     let totalLetterCount = 0;
 
     words.forEach((word, wordIndex) => {
-        // Word wrapper to prevent cutting
         const wordSpan = document.createElement("span");
         wordSpan.style.display = "inline-block";
         wordSpan.style.whiteSpace = "nowrap"; 
-        wordSpan.style.visibility = "visible";
 
         const letters = [...word];
         letters.forEach((l) => {
@@ -69,7 +65,6 @@ function animateLetters(el, delay = 0) {
             s.textContent = l;
             s.style.display = "inline-block";
             s.style.opacity = "0"; 
-            s.style.visibility = "visible";
             s.style.transform = "translateY(10px)";
             s.style.transition = "opacity 0.4s ease, transform 0.4s ease";
             
@@ -85,7 +80,6 @@ function animateLetters(el, delay = 0) {
 
         el.appendChild(wordSpan);
 
-        // Add proper space between words
         if (wordIndex < words.length - 1) {
             const space = document.createElement("span");
             space.innerHTML = "&nbsp;";
@@ -94,28 +88,45 @@ function animateLetters(el, delay = 0) {
         }
     });
 
-    return delay + totalLetterCount * 40;
-}
-
-function startAnimations(){
-    const t=document.querySelector(".content-box h1"),p=document.querySelector(".content-box p");
-    if(t){
-        let d = animateLetters(t, 0);
-        setTimeout(()=>{
-            t.classList.add("underline-grow");
-            if(p) {
-                p.style.visibility = "visible";
-                animateLetters(p, 0);
-            }
-        }, d + 200);
+    // Jab poora text likha jaye, tab next step start karo
+    if (callback) {
+        setTimeout(callback, delay + totalLetterCount * 40 + 200);
     }
 }
 
-document.querySelectorAll('.button').forEach(b=>{
-    b.addEventListener('click',e=>{
+function startAnimations() {
+    const t = document.querySelector(".content-box h1");
+    const p = document.querySelector(".content-box p");
+    const b = document.querySelector(".button");
+
+    if (t) {
+        // Step 1: Headline start
+        animateLetters(t, 0, () => {
+            // Step 2: Underline draw karo (H1 khatam hone par)
+            t.classList.add("underline-grow");
+            
+            // Step 3: Paragraph start karo (thoda gap dekar)
+            setTimeout(() => {
+                if (p) {
+                    animateLetters(p, 0, () => {
+                        // Step 4: End mein button dikhao
+                        if (b) {
+                            b.style.opacity = "1";
+                            b.style.visibility = "visible";
+                            b.style.transform = "translateY(0)";
+                        }
+                    });
+                }
+            }, 800);
+        });
+    }
+}
+
+document.querySelectorAll('.button').forEach(btn=>{
+    btn.addEventListener('click',e=>{
         triggerSparkles(e);
         e.preventDefault();
-        setTimeout(()=>window.location.href=b.href, 400);
+        setTimeout(()=>window.location.href=btn.href, 400);
     });
 });
 </script>
