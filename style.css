@@ -146,16 +146,20 @@ textarea {
     text-align: left;
 }
 
-/* ===== LETTER ANIMATION FIXED ===== */
+/* ===== LETTER ANIMATION PERFECT FIX ===== */
 
 .content-box h1 span,
 .content-box p span {
   opacity: 0;
-  display: inline;
+  display: inline-block;  /* inline-block wapas */
   transform: translateY(15px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  white-space: pre;
-  letter-spacing: -0.5px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* punctuation ke liye special fix */
+.content-box h1 span.punc,
+.content-box p span.punc {
+  margin-left: -3px;
 }
 
 /* Underline full width animation */
