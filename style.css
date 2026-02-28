@@ -150,10 +150,12 @@ textarea {
 
 .content-box h1 span,
 .content-box p span {
-    opacity: 0;
-    display: inline-block;
-    transform: translateY(15px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  display: inline;
+  transform: translateY(15px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: pre;
+  letter-spacing: -0.5px;
 }
 
 /* Underline full width animation */
