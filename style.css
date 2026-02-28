@@ -141,7 +141,7 @@ p {
     transform: scale(0.9); /* Click karne par dabne wala effect */
 }
 
-/* Sparkle Canvas Settings - Yeh zaroori hai stars dikhane ke liye */
+/* Sparkle Canvas Settings */
 canvas {
     z-index: 10001 !important;
     pointer-events: none;
@@ -151,7 +151,7 @@ canvas {
 }
 
 /* =========================================
-   REST OF THE STYLES (UNCHANGED)
+   REST OF THE STYLES (WORD BREAK FIX ADDED)
    ========================================= */
 .footer {
     margin-top: 60px;
@@ -186,10 +186,11 @@ canvas {
     position: relative;
 }
 
-/* Punctuation Gap Fix */
+/* NO WORD BREAK FIX: Har letter ko ek saath rakhne ke liye settings */
 .content-box h1 span, 
 .content-box p span {
-    display: inline-flex !important;
+    display: inline-block !important; /* inline-flex se hatakar inline-block kiya */
+    white-space: pre; /* Spaces ko preserve karne ke liye */
     margin: 0 !important;
     padding: 0 !important;
     opacity: 0;
@@ -201,6 +202,11 @@ canvas {
     font-family: 'BerlinSmallCaps';
     color: black;
     line-height: 1.8;
+    /* WORD WRAPPING FIXES */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    text-align: center;
 }
 
 textarea {
