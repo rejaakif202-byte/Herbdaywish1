@@ -25,10 +25,87 @@
 </body>
 <script>
 const CORRECT_PASSWORD = "19031112";
-function triggerSparkles(e){const s=confetti.shapeFromPath({path:'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z'});confetti({shapes:[s],particleCount:25,spread:80,origin:{x:e.clientX/window.innerWidth,y:e.clientY/window.innerHeight},colors:['#ff4d6d','#ffb6c1','#ffd700','#5e2b97'],gravity:1.2,scalar:0.8});}
-function checkPassword(){const i=document.getElementById("passInput").value,o=document.getElementById("password-overlay");if(i===CORRECT_PASSWORD){o.style.opacity="0";setTimeout(()=>{o.style.display="none";startAnimations();},500);}else{alert("Galat password! 😤");document.getElementById("passInput").value="";}}
-function animateLetters(el,delay=0){const txt=el.textContent.trim();el.textContent="";el.classList.add("started");[...txt].forEach((l,i)=>{const s=document.createElement("span");s.innerHTML=(l===" ")?"&nbsp;":l;s.style.display="inline-block";s.style.whiteSpace="nowrap";s.style.opacity="0";s.style.transform="translateY(10px)";s.style.transition="opacity 0.4s ease, transform 0.4s ease";el.appendChild(s);setTimeout(()=>{s.style.opacity="1";s.style.transform="translateY(0)";},delay+i*40);});return delay+txt.length*40;}
-function startAnimations(){const t=document.querySelector(".content-box h1"),p=document.querySelector(".content-box p");if(t){let d=animateLetters(t,0);setTimeout(()=>{t.classList.add("underline-grow");if(p)setTimeout(()=>animateLetters(p,0),500);},d+200);}}
-document.querySelectorAll('.button').forEach(b=>{b.addEventListener('click',e=>{triggerSparkles(e);e.preventDefault();setTimeout(()=>window.location.href=b.href,400);});});
+
+function triggerSparkles(e){
+    const s=confetti.shapeFromPath({path:'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z'});
+    confetti({shapes:[s],particleCount:25,spread:80,origin:{x:e.clientX/window.innerWidth,y:e.clientY/window.innerHeight},colors:['#ff4d6d','#ffb6c1','#ffd700','#5e2b97'],gravity:1.2,scalar:0.8});
+}
+
+function checkPassword(){
+    const i=document.getElementById("passInput").value,o=document.getElementById("password-overlay");
+    if(i===CORRECT_PASSWORD){
+        o.style.opacity="0";
+        setTimeout(()=>{o.style.display="none";startAnimations();},500);
+    }else{
+        alert("Galat password! 😤");
+        document.getElementById("passInput").value="";
+    }
+}
+
+// --- FIXED ANIMATION LOGIC TO PREVENT WORD BREAK ---
+function animateLetters(el, delay = 0) {
+    const text = el.textContent.trim();
+    el.textContent = "";
+    el.classList.add("started");
+
+    // Text ko words mein divide karna
+    const words = text.split(" ");
+    let totalLetterCount = 0;
+
+    words.forEach((word, wordIndex) => {
+        // Har word ke liye ek span (taki word line ke end mein break na ho)
+        const wordSpan = document.createElement("span");
+        wordSpan.style.display = "inline-block";
+        wordSpan.style.whiteSpace = "nowrap"; 
+
+        const letters = [...word];
+        letters.forEach((l) => {
+            const s = document.createElement("span");
+            s.textContent = l;
+            s.style.display = "inline-block";
+            s.style.opacity = "0";
+            s.style.transform = "translateY(10px)";
+            s.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+            
+            wordSpan.appendChild(s);
+
+            setTimeout(() => {
+                s.style.opacity = "1";
+                s.style.transform = "translateY(0)";
+            }, delay + totalLetterCount * 40);
+
+            totalLetterCount++;
+        });
+
+        el.appendChild(wordSpan);
+
+        // Word ke baad space add karna (taki sentences chipke nahi)
+        if (wordIndex < words.length - 1) {
+            const space = document.createTextNode(" ");
+            el.appendChild(space);
+        }
+    });
+
+    return delay + totalLetterCount * 40;
+}
+
+function startAnimations(){
+    const t=document.querySelector(".content-box h1"),p=document.querySelector(".content-box p");
+    if(t){
+        let d=animateLetters(t, 0);
+        setTimeout(()=>{
+            t.classList.add("underline-grow");
+            if(p) setTimeout(()=>animateLetters(p, 0), 500);
+        }, d + 200);
+    }
+}
+
+document.querySelectorAll('.button').forEach(b=>{
+    b.addEventListener('click',e=>{
+        triggerSparkles(e);
+        e.preventDefault();
+        setTimeout(()=>window.location.href=b.href, 400);
+    });
+});
 </script>
 </html>
