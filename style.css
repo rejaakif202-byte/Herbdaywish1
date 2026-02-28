@@ -31,7 +31,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fff0f5; /* Solid background */
+    background: #fff0f5; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,7 +40,7 @@ body {
 }
 
 #password-overlay h2 {
-    font-family: 'Signatra', serif; /* Headline font */
+    font-family: 'Signatra', serif;
     font-size: 55px;
     color: #ff4d6d;
     margin-bottom: 20px;
@@ -58,10 +58,10 @@ body {
     margin-bottom: 15px;
 }
 
-/* Main Content Container (Hidden until password correct) */
+/* Main Content Container */
 .container {
     width: 100%;
-    display: none; /* JS will change this to flex */
+    display: none; 
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -71,7 +71,7 @@ body {
 /* White Box - Fixed Center */
 .content-box {
     background: white;
-    padding: 40px 30px;
+    padding: 30px 20px;
     border-radius: 30px;
     width: 85%;
     max-width: 650px;
@@ -85,7 +85,7 @@ body {
 
 /* Headline inside Box */
 #title {
-    font-family: 'Signatra', serif; /* Headline font */
+    font-family: 'Signatra', serif;
     font-size: 50px;
     color: black;
     display: inline-block;
@@ -93,7 +93,6 @@ body {
     margin: 0 auto 20px auto;
 }
 
-/* Black Underline for Headline */
 #title::after {
     content: "";
     position: absolute;
@@ -108,16 +107,20 @@ body {
     width: 100%;
 }
 
-/* Paragraph inside Box */
+/* Paragraph inside Box - WORD BREAK FIXED */
 #para {
-    font-family: 'BerlinSmallCaps', sans-serif; /* Content font */
+    font-family: 'BerlinSmallCaps', sans-serif;
     font-size: 24px;
     color: black;
     line-height: 1.4;
     text-align: center;
     width: 100%;
-    word-wrap: break-word; /* Prevents word breaking */
+    
+    /* In lines se word break hona band ho jayega */
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
     white-space: normal;
+    display: block;
 }
 
 /* Letter Animation Spans */
@@ -126,13 +129,16 @@ span {
     opacity: 0;
     transform: translateY(10px);
     transition: all 0.3s ease;
+    /* Spans ke beech space maintain rakhta hai */
+    white-space: pre; 
 }
+
 span.reveal {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
 
-/* Next Page Button - Outside the White Box */
+/* Next Page Button */
 .button {
     margin-top: 35px;
     padding: 15px 45px;
@@ -145,13 +151,12 @@ span.reveal {
     font-weight: bold;
     border: none;
     cursor: pointer;
-    opacity: 0; /* Hidden initially for animation */
+    opacity: 0; 
     transform: translateY(25px);
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3);
 }
 
-/* Password Button special case (Always visible on overlay) */
 #password-overlay .button {
     opacity: 1;
     transform: translateY(0);
@@ -168,30 +173,28 @@ span.reveal {
     box-shadow: 0 12px 25px rgba(255, 77, 109, 0.5);
 }
 
-/* Sparkle/Active effect on touch/click */
 .button:active {
     transform: scale(0.95);
     filter: brightness(1.2);
 }
 
-/* Footer Styling */
+/* Footer Styling - Bada aur Extra Bold */
 .footer {
-    margin-top: 25px;
+    margin-top: 30px;
     color: black;
     font-family: 'BerlinSmallCaps', sans-serif;
-    font-weight: bold;
-    text-decoration: underline; /* Black underline */
-    font-size: 30px;
-    font-weight: 900;
+    font-size: 30px; /* Bada font */
+    font-weight: 900; /* Extra bold */
     text-align: center;
     width: 100%;
+    display: inline-block;
 }
 
 .footer::after {
     content: "";
     display: block;
-    width: 100%; /* Underline ki length */
-    height: 3px; /* Thick underline */
+    width: 60%; /* Underline length adjust ki hai taaki sundar lage */
+    height: 4px; /* Thoda thick underline */
     background: black;
     margin: 5px auto 0 auto;
     border-radius: 2px;
