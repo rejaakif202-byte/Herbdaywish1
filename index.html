@@ -1,62 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyJaanAnshi</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        /* Naye CSS rules button fix karne aur usko animated banane ke liye */
-        #password-overlay button {
-            display: inline-block !important; /* Visual fixes ke liye */
-            opacity: 1 !important; /* Dikhne ki guarantee ke liye */
-            transform: scale(1) !important; /* Sahi scale set karne ke liye */
-            visibility: visible !important; /* Visible rakhne ke liye */
-            transition: all 0.3s ease-in-out !important; /* Smooth animation trigger ke liye */
-            cursor: pointer; /* Pointer badalne ke liye */
-        }
-    </style>
 </head>
 <body>
 
-<div id="password-overlay">
-    <h2>Enter Secret Code 👀</h2>
-    <p style="color: #ff4d6d; font-family: sans-serif; font-size: 14px; margin-bottom: 10px;">Hint :- Wp ka chat lock pass</p>
-    <input type="password" id="passInput" placeholder="Yaha password likho...">
-    <button onclick="checkPassword()">Unlock Surprise 🔓</button>
-</div>
-
-<div class="container">
-    <div class="content-box">
-        <h1 id="title">Welcome My Jaan Anshi 👀💋</h1>
-        <p id="para">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
-        
-        <a href="wish.html" class="button" id="nextBtn">yaha click karo 👀</a>
+    <div id="password-overlay">
+        <h2>Enter Secret Code 👀</h2>
+        <input type="password" id="passInput" placeholder="Yaha password likho...">
+        <button class="button show-btn" onclick="checkPassword()">Unlock Surprise 🔓</button>
     </div>
-    
-    <div class="footer">A Special Msg 👀 • For My Heart</div>
-</div>
+
+    <div class="container" id="main-container">
+        <div class="content-box">
+            <h1 id="title">Welcome My Jaan Anshi 👀💋</h1>
+            <p id="para">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
+        </div>
+
+        <a href="wish.html" class="button" id="nextBtn">YAHA CLICK KARO 👀</a>
+
+        <div class="footer">A Special Msg 👀 • For My Heart</div>
+    </div>
 
 <script>
 const CORRECT_PASSWORD = "19031112";
 
+// Sparkle Effect Function
+function triggerSparkles(event) {
+    confetti({ 
+        particleCount: 50, 
+        spread: 70, 
+        origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
+        colors: ['#ff4d6d', '#ffffff', '#ffd700']
+    });
+}
+
+// Password Validation
 function checkPassword() {
     const input = document.getElementById("passInput").value;
     const overlay = document.getElementById("password-overlay");
-    const container = document.querySelector(".container");
+    const container = document.getElementById("main-container");
 
     if (input === CORRECT_PASSWORD) {
-        // 1. Password hatne ka animation
         overlay.style.opacity = "0";
-        
         setTimeout(() => {
             overlay.style.display = "none";
-            
-            // 2. Index content ko display karna
-            container.style.display = "flex";
-            setTimeout(() => {
-                container.style.opacity = "1";
-                startSequence(); // Letter animation start
-            }, 50);
+            container.style.display = "flex"; // Show index page
+            startSequence(); // Trigger animations
         }, 500);
     } else {
         alert("Galat password! 😤");
@@ -64,28 +58,14 @@ function checkPassword() {
     }
 }
 
-function startSequence() {
-    const t = document.getElementById("title");
-    const p = document.getElementById("para");
-    const b = document.getElementById("nextBtn");
-
-    animateLetters(t, () => {
-        t.classList.add("underline-grow");
-        setTimeout(() => {
-            animateLetters(p, () => {
-                // Button ko reveal karna
-                b.classList.add("show-btn");
-            });
-        }, 600);
-    });
-}
-    
-// Letter Animation Function (Purana logic class 'reveal' based retained)
+// Letter Animation Logic (No Word Break)
 function animateLetters(el, callback) {
-    const text = el.innerText;
+    const originalText = el.innerText;
     el.innerHTML = ""; 
     
-    [...text].forEach(char => {
+    // Split by characters but keep words together in spans if needed
+    // Using a simpler span per character logic that CSS handles for wrapping
+    [...originalText].forEach(char => {
         const span = document.createElement("span");
         span.innerHTML = char === " " ? "&nbsp;" : char;
         el.appendChild(span);
@@ -95,40 +75,47 @@ function animateLetters(el, callback) {
     let i = 0;
     const interval = setInterval(() => {
         if(i < spans.length) {
-            spans[i].classList.add("reveal"); // Triggers CSS animation
+            spans[i].classList.add("reveal");
             i++;
         } else {
             clearInterval(interval);
             if(callback) callback();
         }
-    }, 4000 / spans.length > 40 ? 40 : 30); // Dynamic speed
+    }, 30);
 }
 
-// Animation Sequence Manager (Purana sequence logic retained)
+// Sequence: Headline -> Underline -> Paragraph -> Button
 function startSequence() {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
 
-    // Start with Title
+    // 1. Headline Letter by Letter
     animateLetters(t, () => {
+        // 2. Underline animation
         t.classList.add("underline-grow");
+        
         setTimeout(() => {
-            // Start Paragraph
+            // 3. Paragraph Letter by Letter
             animateLetters(p, () => {
-                // Trigger Animated Button
+                // 4. Button shows up
                 b.classList.add("show-btn");
             });
-        }, 600);
+        }, 700);
     });
 }
 
-// Button Click Handling (Purana retained)
-document.getElementById('nextBtn').addEventListener('click', (e) => {
+// Sparkle on Button Click
+document.getElementById('nextBtn').addEventListener('click', function(e) {
     triggerSparkles(e);
     e.preventDefault();
-    const targetUrl = e.target.href;
-    setTimeout(() => { window.location.href = targetUrl; }, 500);
+    const url = this.href;
+    setTimeout(() => { window.location.href = url; }, 600);
+});
+
+// Touch/Tap sparkle for Password Button
+document.querySelector('#password-overlay .button').addEventListener('click', (e) => {
+    triggerSparkles(e);
 });
 </script>
 
