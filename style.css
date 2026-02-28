@@ -1,3 +1,4 @@
+/* Font Declarations */
 @font-face {
     font-family: 'Signatra';
     src: url('Signatra.ttf') format('opentype');
@@ -7,142 +8,180 @@
     src: url('BerlinSmallCaps.ttf') format('truetype');
 }
 
+/* Global Styles */
 body {
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    min-height: 100vh;
     background: linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)), url("file_00000000f42c620a987754adeca98283.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    overflow-x: hidden;
+}
+
+/* Password Page Overlay */
+#password-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff0f5; /* Solid background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+}
+
+#password-overlay h2 {
+    font-family: 'Signatra', serif; /* Headline font */
+    font-size: 55px;
+    color: #ff4d6d;
+    margin-bottom: 20px;
+}
+
+/* Password Input */
+#passInput {
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 2px solid #ff4d6d;
+    font-family: 'BerlinSmallCaps', sans-serif;
+    text-align: center;
+    font-size: 18px;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+/* Main Content Container (Hidden until password correct) */
+.container {
+    width: 100%;
+    display: none; /* JS will change this to flex */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* White Box - Fixed Center */
+.content-box {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 30px;
+    width: 85%;
+    max-width: 650px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-.content-box {
-    background: white;
-    padding: 40px;
-    border-radius: 30px;
-    max-width: 800px;
-    width: 85%;
-    box-shadow: 0 15px 45px rgba(0,0,0,0.2);
-    text-align: center;
-    overflow: hidden;
+/* Headline inside Box */
+#title {
+    font-family: 'Signatra', serif; /* Headline font */
+    font-size: 50px;
+    color: black;
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 20px auto;
 }
 
-/* Text Base Styles */
-#title, #para { color: black; margin-bottom: 20px; }
-#title { font-family: serif; font-size: 50px; position: relative; display: inline-block; }
-#para { font-family: 'BerlinSmallCaps', sans-serif; font-size: 28px; line-height: 1.4; }
+/* Black Underline for Headline */
+#title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 3px;
+    width: 0;
+    background: black;
+    transition: width 0.8s ease;
+}
+#title.underline-grow::after {
+    width: 100%;
+}
 
-/* Letters Animation */
-.content-box span {
+/* Paragraph inside Box */
+#para {
+    font-family: 'BerlinSmallCaps', sans-serif; /* Content font */
+    font-size: 24px;
+    color: black;
+    line-height: 1.4;
+    text-align: center;
+    width: 100%;
+    word-wrap: break-word; /* Prevents word breaking */
+    white-space: normal;
+}
+
+/* Letter Animation Spans */
+span {
     display: inline-block;
     opacity: 0;
-    transform: translateY(15px);
-    transition: all 0.4s ease;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
 }
-
-.content-box span.reveal {
+span.reveal {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
 
-/* ANIMATED BUTTON FIX */
+/* Next Page Button - Outside the White Box */
 .button {
-    display: inline-block;
-    opacity: 0; /* Shuruat mein hide */
-    transform: translateY(30px); /* Neeche se aayega */
-    margin-top: 30px;
-    padding: 18px 45px;
+    margin-top: 35px;
+    padding: 15px 45px;
     background: #ff4d6d;
     color: white !important;
     text-decoration: none;
     border-radius: 50px;
-    font-family: 'BerlinSmallCaps';
+    font-family: 'BerlinSmallCaps', sans-serif;
     font-size: 22px;
     font-weight: bold;
-    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
+    border: none;
+    cursor: pointer;
+    opacity: 0; /* Hidden initially for animation */
+    transform: translateY(25px);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3);
 }
 
-/* Button reveal class */
+/* Password Button special case (Always visible on overlay) */
+#password-overlay .button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .button.show-btn {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
 
 .button:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
     background: #ff758c;
-    box-shadow: 0 15px 30px rgba(255, 77, 109, 0.5);
+    box-shadow: 0 12px 25px rgba(255, 77, 109, 0.5);
 }
 
-/* Underline */
-#title::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    height: 4px;
-    width: 0;
-    background: #ff4d6d;
-    transition: width 0.8s ease;
-}
-#title.underline-grow::after { width: 100%; }
-
-/* Password Overlay ko 100% alag aur solid banane ke liye */
-#password-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #fff0f5 !important; /* Solid background taaki piche ka kuch na dikhe */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999; /* Sabse upar rakhne ke liye */
-    transition: opacity 0.5s ease;
+/* Sparkle/Active effect on touch/click */
+.button:active {
+    transform: scale(0.95);
+    filter: brightness(1.2);
 }
 
-/* Password Button ko bhi animated banaya hai */
-#password-overlay button {
-    margin-top: 30px;
-    padding: 15px 40px;
-    background: #ff4d6d;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 20px;
+/* Footer Styling */
+.footer {
+    margin-top: 25px;
+    color: black;
+    font-family: 'BerlinSmallCaps', sans-serif;
     font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-#password-overlay button:hover {
-    transform: scale(1.1);
-    background: #ff758c;
-}
-
-/* Index ka content shuruat mein pura hide rahega */
-.container {
-    display: none; /* JS se show hoga */
-    opacity: 0;
-    transition: opacity 0.8s ease;
-}
-
-/* Baki sare common button styles */
-.button {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s ease;
-}
-
-.button.show-btn {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
+    text-decoration: underline; /* Black underline */
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
 }
