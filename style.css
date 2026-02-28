@@ -124,3 +124,9 @@ textarea {
     gap: 25px;   /* Gap increase kiya */
     margin-top: 40px;
 }
+
+.feedback-wrapper .button {
+    padding: 22px 55px;
+    font-size: 22px;
+    border-radius: 50px;
+}
