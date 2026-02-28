@@ -29,7 +29,6 @@
 <script>
 const CORRECT_PASSWORD = "19031112";
 
-// Sparkle Effect Function
 function triggerSparkles(event) {
     confetti({ 
         particleCount: 50, 
@@ -39,7 +38,6 @@ function triggerSparkles(event) {
     });
 }
 
-// Password Validation
 function checkPassword() {
     const input = document.getElementById("passInput").value;
     const overlay = document.getElementById("password-overlay");
@@ -49,8 +47,8 @@ function checkPassword() {
         overlay.style.opacity = "0";
         setTimeout(() => {
             overlay.style.display = "none";
-            container.style.display = "flex"; // Show index page
-            startSequence(); // Trigger animations
+            container.style.display = "flex"; 
+            startSequence(); 
         }, 500);
     } else {
         alert("Galat password! 😤");
@@ -58,24 +56,44 @@ function checkPassword() {
     }
 }
 
-// Letter Animation Logic (No Word Break)
+// UPGRADED: Word-Safe Letter Animation
 function animateLetters(el, callback) {
     const originalText = el.innerText;
     el.innerHTML = ""; 
+
+    // Pehle pure text ko words mein split karenge
+    const words = originalText.split(" ");
     
-    // Split by characters but keep words together in spans if needed
-    // Using a simpler span per character logic that CSS handles for wrapping
-    [...originalText].forEach(char => {
-        const span = document.createElement("span");
-        span.innerHTML = char === " " ? "&nbsp;" : char;
-        el.appendChild(span);
+    words.forEach((word, wordIndex) => {
+        // Har word ke liye ek 'wrapper span' banayenge jo word ko tootne se rokega
+        const wordWrapper = document.createElement("span");
+        wordWrapper.style.display = "inline-block"; 
+        wordWrapper.style.whiteSpace = "nowrap"; // Word break protection
+
+        // Word ke andar ke letters ko span mein dalenge
+        [...word].forEach(char => {
+            const letterSpan = document.createElement("span");
+            letterSpan.innerHTML = char;
+            letterSpan.classList.add("reveal-span"); // Animation class
+            wordWrapper.appendChild(letterSpan);
+        });
+
+        el.appendChild(wordWrapper);
+
+        // Word ke baad space add karna (agar last word nahi hai toh)
+        if (wordIndex < words.length - 1) {
+            const space = document.createElement("span");
+            space.innerHTML = "&nbsp;";
+            el.appendChild(space);
+        }
     });
 
-    const spans = el.querySelectorAll("span");
+    // Saare letters ko ek saath select karke sequence mein reveal karna
+    const allLetters = el.querySelectorAll(".reveal-span");
     let i = 0;
     const interval = setInterval(() => {
-        if(i < spans.length) {
-            spans[i].classList.add("reveal");
+        if(i < allLetters.length) {
+            allLetters[i].classList.add("reveal"); 
             i++;
         } else {
             clearInterval(interval);
@@ -84,28 +102,21 @@ function animateLetters(el, callback) {
     }, 30);
 }
 
-// Sequence: Headline -> Underline -> Paragraph -> Button
 function startSequence() {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
 
-    // 1. Headline Letter by Letter
     animateLetters(t, () => {
-        // 2. Underline animation
         t.classList.add("underline-grow");
-        
         setTimeout(() => {
-            // 3. Paragraph Letter by Letter
             animateLetters(p, () => {
-                // 4. Button shows up
                 b.classList.add("show-btn");
             });
         }, 700);
     });
 }
 
-// Sparkle on Button Click
 document.getElementById('nextBtn').addEventListener('click', function(e) {
     triggerSparkles(e);
     e.preventDefault();
@@ -113,7 +124,6 @@ document.getElementById('nextBtn').addEventListener('click', function(e) {
     setTimeout(() => { window.location.href = url; }, 600);
 });
 
-// Touch/Tap sparkle for Password Button
 document.querySelector('#password-overlay .button').addEventListener('click', (e) => {
     triggerSparkles(e);
 });
