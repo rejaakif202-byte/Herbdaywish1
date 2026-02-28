@@ -141,3 +141,7 @@ textarea {
     font-size: 26px;
     border-radius: 50px;
 }
+
+.feedback-wrapper textarea {
+    text-align: left;
+}
