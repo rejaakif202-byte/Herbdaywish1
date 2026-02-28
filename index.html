@@ -21,30 +21,35 @@
 
 <a href="wish.html" class="button">YAHA CLICK KARO 👀</a>
 
-<div class="footer"></u>A Special Msg 👀 • For My Heart</u></div>
+<div class="footer">A Special Msg 👀 • For My Heart</div>
 </div>
 
 </body>
 
 <script>
-            
 function animateLetters(element, delayStart = 0) {
     const text = element.textContent;
     element.textContent = "";
-    const letters = [...text];
+
+    // Emoji-safe split using spread operator
+    const letters = [...text]; 
 
     letters.forEach((letter, index) => {
         const span = document.createElement("span");
-        span.style.opacity = "0"; // Shuruat me gayab
-        span.style.transform = "translateY(10px)"; // Thoda niche se upar aayega
-        span.style.transition = "all 0.5s ease"; // Smooth animation ke liye
-        span.style.display = "inline-block";
 
         if (letter === " ") {
             span.innerHTML = "&nbsp;";
         } else {
             span.textContent = letter;
         }
+
+        // Inline-flex use karne se punctuation ke extra gaps khatam ho jate hain
+        span.style.display = "inline-flex";
+        span.style.opacity = "0";
+        span.style.transform = "translateY(10px)";
+        span.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+        span.style.margin = "0"; // Extra space hatane ke liye
+        span.style.padding = "0";
 
         element.appendChild(span);
 
@@ -62,15 +67,22 @@ window.addEventListener("load", () => {
     const paragraph = document.querySelector(".content-box p");
 
     if (title) {
-        let delay = animateLetters(title, 0);
-        
+        // 1. Pehle Title animate hoga
+        let delayAfterTitle = animateLetters(title, 0);
+
+        // 2. Title khatam hone ke baad Underline ayegi
         setTimeout(() => {
             title.classList.add("underline-grow");
-            if (paragraph) animateLetters(paragraph, 0);
-        }, delay + 500);
+            
+            // 3. Underline shuru hone ke thodi der baad Paragraph shuru hoga
+            if (paragraph) {
+                setTimeout(() => {
+                    animateLetters(paragraph, 0);
+                }, 400); // Underline ke saath smooth overlap ke liye
+            }
+        }, delayAfterTitle + 100);
     }
 });
-    
 </script>
     
 </html>
