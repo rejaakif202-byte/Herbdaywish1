@@ -39,44 +39,47 @@
 <script>
 const CORRECT_PASSWORD = "19031112";
 
-// Confetti Effect Function (Purana function retained)
-function triggerSparkles(event) {
-    confetti({ 
-        particleCount: 40, 
-        spread: 70, 
-        origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight }, 
-        colors: ['#ff4d6d', '#ffffff', '#ffd700'] 
-    });
-}
-
-// Password Verification Logic - Fixed visual error handling
 function checkPassword() {
     const input = document.getElementById("passInput").value;
     const overlay = document.getElementById("password-overlay");
-    const unlockButton = document.querySelector("#password-overlay button");
-    
-    // Unlock attempts tracker naye visual reset logic ke liye
-    let attemptsCount = localStorage.getItem("attemptsCount") || 0;
+    const container = document.querySelector(".container");
 
     if (input === CORRECT_PASSWORD) {
+        // 1. Password hatne ka animation
         overlay.style.opacity = "0";
+        
         setTimeout(() => {
             overlay.style.display = "none";
-            startSequence(); // Start animations after unlock
+            
+            // 2. Index content ko display karna
+            container.style.display = "flex";
+            setTimeout(() => {
+                container.style.opacity = "1";
+                startSequence(); // Letter animation start
+            }, 50);
         }, 500);
-        
-        // Reset count on success
-        localStorage.removeItem("attemptsCount"); 
     } else {
         alert("Galat password! 😤");
         document.getElementById("passInput").value = "";
-        
-        // Count failure, visual cues adjust
-        attemptsCount++;
-        localStorage.setItem("attemptsCount", attemptsCount);
     }
 }
 
+function startSequence() {
+    const t = document.getElementById("title");
+    const p = document.getElementById("para");
+    const b = document.getElementById("nextBtn");
+
+    animateLetters(t, () => {
+        t.classList.add("underline-grow");
+        setTimeout(() => {
+            animateLetters(p, () => {
+                // Button ko reveal karna
+                b.classList.add("show-btn");
+            });
+        }, 600);
+    });
+}
+    
 // Letter Animation Function (Purana logic class 'reveal' based retained)
 function animateLetters(el, callback) {
     const text = el.innerText;
