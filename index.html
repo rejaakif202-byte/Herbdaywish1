@@ -6,145 +6,27 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-
 <div id="password-overlay">
     <h2>Enter Secret Code 👀</h2>
-    <p style="color: #ff4d6d; font-family: sans-serif; font-size: 14px; margin-bottom: 10px;">
-        Hint :- Wp ka chat lock pass
-    </p>
+    <p style="color: #ff4d6d; font-family: sans-serif; font-size: 14px; margin-bottom: 10px;">Hint :- Wp ka chat lock pass</p>
     <input type="password" id="passInput" placeholder="Yaha password likho...">
     <button onclick="checkPassword()">Unlock Surprise 🔓</button>
 </div>
 <div class="container">
-
     <div class="content-box">
         <h1>Welcome My Jaan Anshi 👀💋</h1>
-        <p>
-             ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ 😭💗🎀
-        </p>
+        <p>Finally, Aa hi gaye aap yaha par 👀. Apke liye chota sa surprise banaya h maine 😭👉👈, so i want ki aap us surprise ko dekho and batao ki kaisa laga 😭💗. Aaj sirf apka hi special day nhi h 👀 aaj mere pyaari sherni ka janamdin h 😭💗🎀</p>
+    </div>
+    <a href="wish.html" class="button">YAHA CLICK KARO 👀</a>
+    <div class="footer">A Special Msg 👀 • For My Heart</div>
 </div>
-
-<a href="wish.html" class="button">YAHA CLICK KARO 👀</a>
-
-<div class="footer">A Special Msg 👀 • For My Heart</div>
-</div>
-
 </body>
-
 <script>
 const CORRECT_PASSWORD = "19031112";
-
-// --- Sparkle Animation Function ---
-function triggerSparkles(event) {
-    const scalar = 2;
-    // Star shape definition
-    const star = confetti.shapeFromPath({ path: 'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z' });
-
-    confetti({
-        shapes: [star],
-        particleCount: 25,
-        spread: 80,
-        origin: {
-            x: event.clientX / window.innerWidth,
-            y: event.clientY / window.innerHeight
-        },
-        colors: ['#ff4d6d', '#ffb6c1', '#ffd700', '#5e2b97'],
-        ticks: 200,
-        gravity: 1.2,
-        scalar: 0.8,
-        drift: 0
-    });
-}
-
-// Password Check Function
-function checkPassword() {
-    const input = document.getElementById("passInput").value;
-    const overlay = document.getElementById("password-overlay");
-
-    if (input === CORRECT_PASSWORD) {
-        overlay.style.opacity = "0";
-        setTimeout(() => {
-            overlay.style.display = "none";
-            startAnimations(); 
-        }, 500);
-    } else {
-        alert("Galat password hai meri bachiiii! 😤 Dobara try karo.");
-        document.getElementById("passInput").value = "";
-    }
-}
-
-function animateLetters(element, delayStart = 0) {
-    const text = element.textContent.trim();
-    element.textContent = "";
-    element.classList.add("started");
-
-    const letters = [...text]; 
-
-    letters.forEach((letter, index) => {
-        const span = document.createElement("span");
-
-        if (letter === " ") {
-            span.innerHTML = "&nbsp;";
-        } else {
-            span.textContent = letter;
-        }
-
-        span.style.display = "inline-flex";
-        span.style.opacity = "0";
-        span.style.transform = "translateY(10px)";
-        span.style.transition = "opacity 0.4s ease, transform 0.4s ease";
-        span.style.margin = "0";
-
-        element.appendChild(span);
-
-        setTimeout(() => {
-            span.style.opacity = "1";
-            span.style.transform = "translateY(0)";
-        }, delayStart + index * 50);
-    });
-
-    return delayStart + letters.length * 50;
-}
-
-function startAnimations() {
-    const title = document.querySelector(".content-box h1");
-    const paragraph = document.querySelector(".content-box p");
-
-    if (title) {
-        let delayAfterTitle = animateLetters(title, 0);
-        setTimeout(() => {
-            title.classList.add("underline-grow");
-            if (paragraph) {
-                setTimeout(() => {
-                    animateLetters(paragraph, 0);
-                }, 500); 
-            }
-        }, delayAfterTitle + 200);
-    }
-}
-
-// --- Button Click Event for Sparkles ---
-document.addEventListener("DOMContentLoaded", () => {
-    // Sabhi buttons aur links par click listener lagana
-    document.querySelectorAll('.button, button').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            triggerSparkles(e);
-
-            // Agar link hai toh thoda delay karke redirect karega
-            if (btn.tagName === 'A') {
-                e.preventDefault();
-                const url = btn.getAttribute('href');
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 400); 
-            }
-        });
-    });
-});
-
-window.addEventListener("load", () => {
-    // Initial wait for password
-});
+function triggerSparkles(e){const s=confetti.shapeFromPath({path:'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z'});confetti({shapes:[s],particleCount:25,spread:80,origin:{x:e.clientX/window.innerWidth,y:e.clientY/window.innerHeight},colors:['#ff4d6d','#ffb6c1','#ffd700','#5e2b97'],gravity:1.2,scalar:0.8});}
+function checkPassword(){const i=document.getElementById("passInput").value,o=document.getElementById("password-overlay");if(i===CORRECT_PASSWORD){o.style.opacity="0";setTimeout(()=>{o.style.display="none";startAnimations();},500);}else{alert("Galat password! 😤");document.getElementById("passInput").value="";}}
+function animateLetters(el,delay=0){const txt=el.textContent.trim();el.textContent="";el.classList.add("started");[...txt].forEach((l,i)=>{const s=document.createElement("span");s.innerHTML=(l===" ")?"&nbsp;":l;s.style.display="inline-block";s.style.whiteSpace="nowrap";s.style.opacity="0";s.style.transform="translateY(10px)";s.style.transition="opacity 0.4s ease, transform 0.4s ease";el.appendChild(s);setTimeout(()=>{s.style.opacity="1";s.style.transform="translateY(0)";},delay+i*40);});return delay+txt.length*40;}
+function startAnimations(){const t=document.querySelector(".content-box h1"),p=document.querySelector(".content-box p");if(t){let d=animateLetters(t,0);setTimeout(()=>{t.classList.add("underline-grow");if(p)setTimeout(()=>animateLetters(p,0),500);},d+200);}}
+document.querySelectorAll('.button').forEach(b=>{b.addEventListener('click',e=>{triggerSparkles(e);e.preventDefault();setTimeout(()=>window.location.href=b.href,400);});});
 </script>
-    
 </html>
