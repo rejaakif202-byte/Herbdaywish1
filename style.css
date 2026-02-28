@@ -146,35 +146,29 @@ textarea {
     text-align: left;
 }
 
-/* Taaki letters ke beech koi extra browser gap na rahe */
+/* Animation shuru hone se pehle text ko chhupane ke liye */
+.content-box h1, 
+.content-box p {
+    opacity: 0; /* Shuru me invisible */
+    visibility: hidden;
+    min-height: 1.2em; /* Layout jump rokne ke liye */
+}
+
+/* Jab JavaScript animation shuru kare tab dikhana hai */
+.content-box h1.started, 
+.content-box p.started {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Letters ki default styling */
 .content-box h1 span, 
 .content-box p span {
     display: inline-flex !important;
     margin: 0 !important;
-    letter-spacing: normal; /* Extra spacing block karne ke liye */
-    vertical-align: baseline;
-}
-
-/* Underline ki styling (Ensure this is in your CSS) */
-.content-box h1 {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-.content-box h1::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0; /* Shuruat mein 0 rahegi */
-    height: 3px;
-    background-color: #ff4d6d; /* Aapka pasandida color */
-    transition: width 0.8s ease-in-out;
-}
-
-.content-box h1.underline-grow::after {
-    width: 100%; /* JS class add hone par grow hoga */
+    padding: 0 !important;
+    opacity: 0;
+    transform: translateY(10px);
 }
 
 /* Underline full width animation */
