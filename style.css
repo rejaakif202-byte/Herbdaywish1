@@ -21,7 +21,7 @@ body {
 }
 
 /* =========================================
-   PASSWORD OVERLAY (SCALED UP)
+   PASSWORD OVERLAY (STAYS AS IS)
    ========================================= */
 #password-overlay {
     position: fixed;
@@ -80,7 +80,7 @@ body {
 }
 
 /* =========================================
-   CONTAINER & CONTENT BOX
+   CONTAINER & EXPANDING CONTENT BOX
    ========================================= */
 .container {
     min-height: 100vh;
@@ -97,10 +97,25 @@ body {
     padding: 60px 40px;
     border-radius: 30px;
     max-width: 900px;
-    width: 95%;
+    width: fit-content; /* Box content ke hisab se bada hoga */
+    min-width: 300px;  /* Shuruat mein chota box */
+    min-height: 100px;
     box-shadow: 0 15px 45px rgba(0,0,0,0.2);
     text-align: center;
     box-sizing: border-box;
+    /* Box expansion transition */
+    transition: width 0.5s ease, height 0.5s ease, padding 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Shuruat mein text hidden rahega */
+.content-box h1, 
+.content-box p {
+    opacity: 0;
+    visibility: hidden;
+    margin: 0;
 }
 
 .content-box h1 {
@@ -110,8 +125,6 @@ body {
     display: inline-block;
     position: relative;
     margin-bottom: 25px;
-    opacity: 1 !important; /* Visible rakho */
-    visibility: visible !important;
 }
 
 .content-box p {
@@ -120,20 +133,20 @@ body {
     color: black;
     line-height: 1.6;
     text-align: center;
-    opacity: 1 !important; /* Visible rakho */
-    visibility: visible !important;
     word-wrap: break-word;
     white-space: normal;
+    margin-top: 15px;
 }
 
-/* NO WORD BREAK: Letters animation logic */
+/* NO WORD BREAK SETTINGS */
 .content-box h1 span, 
 .content-box p span {
     display: inline-block !important;
     white-space: pre !important; 
     margin: 0 !important;
     padding: 0 !important;
-    vertical-align: baseline;
+    opacity: 0; /* JS se animate hoga */
+    transform: translateY(10px);
 }
 
 /* =========================================
@@ -181,7 +194,7 @@ body {
     margin-top: 5px;
 }
 
-/* Underline Animation */
+/* Underline Animation (JS se trigger hoga) */
 .content-box h1::after {
     content: "";
     position: absolute;
