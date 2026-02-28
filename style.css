@@ -90,24 +90,20 @@ p {
 }
 
 .content-box h1 {
-    font-family: 'Lacheyard', cursive;
-    font-size: 48px;
-    color: black;
-    margin-bottom: 15px;
+    display: inline-block;   /* Important */
     position: relative;
-    display: inline-block;
 }
 
 .content-box h1::after {
     content: "";
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     bottom: -8px;
     width: 100%;
-    height: 2px !important;   /* 👈 yaha height control hoga */
-    background: black;
+    height: 2px;
+    background-color: black;
 }
+
 .content-box p {
     font-size: 24px;
     font-family: 'Milky Matcha';
