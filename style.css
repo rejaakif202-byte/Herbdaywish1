@@ -8,23 +8,87 @@
 }
 
 body {
-margin: 0;
-height: 100vh;
-background:
-linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)),
-url("file_00000000f42c620a987754adeca98283.png");
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
+    margin: 0;
+    height: 100vh;
+    background:
+    linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)),
+    url("file_00000000f42c620a987754adeca98283.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-.container {
-    min-height: 100vh;   /* Full screen cover kare */
+/* =========================================
+   PASSWORD OVERLAY (NEW ADDITION)
+   ========================================= */
+#password-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff0f5; /* Light Pinkish background */
     display: flex;
     flex-direction: column;
-    justify-content: center;  /* Vertical center */
-    align-items: center;      /* Horizontal center */
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Sabse upar dikhega */
+    transition: opacity 0.5s ease;
+}
+
+#password-overlay h2 {
+    color: #ff4d6d;
+    font-family: 'Signatra', cursive;
+    font-size: 40px;
+    margin-bottom: 5px;
+}
+
+#password-overlay p {
+    color: #5e2b97;
+    font-family: sans-serif;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#password-overlay input {
+    padding: 12px;
+    border: 2px solid #ff4d6d;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 18px;
+    outline: none;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#password-overlay button {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+#password-overlay button:hover {
+    background: #5e2b97;
+    transform: scale(1.05);
+}
+
+/* =========================================
+   EXISTING STYLES (NO CHANGES)
+   ========================================= */
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
 }
 
@@ -33,13 +97,13 @@ h1 {
     font-size: 60px;
     font-weight: bold;
     letter-spacing: 3px;
-    margin-top: 40px;      /* 👈 Ye heading ko neeche layega */
-    margin-bottom: 15px;   /* 👈 Paragraph ke paas karega */
+    margin-top: 40px;
+    margin-bottom: 15px;
 }
 
 p {
     max-width: 750px;
-    margin: 10px auto 20px auto;  /* 👈 Heading aur button ke beech balance */
+    margin: 10px auto 20px auto;
     font-size: 24px;
     line-height: 1.9;
     font-weight: 500;
@@ -47,14 +111,14 @@ p {
 
 .button {
     display: inline-block;
-    margin-top: 15px;      /* 👈 Paragraph ke just neeche */
-    padding: 18px 45px;    /* 👈 Thoda aur bada */
+    margin-top: 15px;
+    padding: 18px 45px;
     background: white;
     color: #5e2b97;
     text-decoration: none;
     border-radius: 40px;
     font-weight: bold;
-    font-size: 20px;       /* 👈 Bigger text */
+    font-size: 20px;
     transition: 0.3s;
 }
 
@@ -87,22 +151,23 @@ p {
     border-radius: 20px;
     max-width: 800px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center; /* Center aligned content */
 }
 
 .content-box h1 {
     color: black;
-    display: inline-block;   /* Important */
+    display: inline-block;
     position: relative;
 }
 
-.content-box h1::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 100%;
-    height: 2px;
-    background-color: black;
+/* Punctuation Gap Fix - Inline Flex is best */
+.content-box h1 span, 
+.content-box p span {
+    display: inline-flex !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0;
+    transform: translateY(10px);
 }
 
 .content-box p {
@@ -116,7 +181,7 @@ textarea {
     width: 100%;
     max-width: 500px;
     height: 120px;
-    margin-top: 20px;   /* 👈 -40px hata ke positive karo */
+    margin-top: 20px;
     padding: 15px;
     border-radius: 15px;
     border: none;
@@ -132,7 +197,7 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px;   /* Gap increase kiya */
+    gap: 25px;
     margin-top: 40px;
 }
 
@@ -146,36 +211,21 @@ textarea {
     text-align: left;
 }
 
-/* Animation shuru hone se pehle text ko chhupane ke liye */
+/* Animation control */
 .content-box h1, 
 .content-box p {
-    opacity: 0; /* Shuru me invisible */
+    opacity: 0;
     visibility: hidden;
-    min-height: 1.2em; /* Layout jump rokne ke liye */
+    min-height: 1.2em;
 }
 
-/* Jab JavaScript animation shuru kare tab dikhana hai */
 .content-box h1.started, 
 .content-box p.started {
     opacity: 1;
     visibility: visible;
 }
 
-/* Letters ki default styling */
-.content-box h1 span, 
-.content-box p span {
-    display: inline-flex !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    opacity: 0;
-    transform: translateY(10px);
-}
-
-/* Underline full width animation */
-.content-box h1 {
-    position: relative;
-}
-
+/* Underline Animation Fix */
 .content-box h1::after {
     content: "";
     position: absolute;
