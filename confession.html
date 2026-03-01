@@ -7,33 +7,26 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        /* Interactive Buttons Style */
+        /* Specific Styles for this Page */
         .choice-box {
-            display: none; /* Text reveal hone tak hidden */
+            display: none; /* Text khatam hone tak hidden */
             margin-top: 25px;
             gap: 20px;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            min-height: 120px; /* Space for growing button */
+            width: 100%;
+            min-height: 150px; /* Space for scaling */
+            position: relative;
         }
 
-        .btn-yes { 
-            background-color: #ff4d6d !important; 
-            color: white !important; 
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-        }
-        
-        .btn-no { 
-            background-color: #555 !important; 
-            color: white !important; 
-            transition: transform 0.2s ease; 
+        #yesBtn, #noBtn {
+            /* Force CSS to allow scaling and smooth transitions */
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease !important;
         }
 
-        /* Final Next Button */
-        #nextBtn { 
-            display: none; 
-            margin-top: 25px; 
+        #nextBtn {
+            display: none;
+            margin-top: 25px;
         }
     </style>
 </head>
@@ -61,7 +54,7 @@
 
 <script>
 let noClicks = 0;
-const maxTaps = 10; // Logic updated to 10 taps
+const maxTaps = 10; 
 let yesScale = 1;
 let noScale = 1;
 
@@ -134,28 +127,33 @@ const noBtn = document.getElementById('noBtn');
 const nextBtn = document.getElementById('nextBtn');
 const choiceContainer = document.getElementById('choiceContainer');
 
-// --- NO BUTTON LOGIC (Aggressive Scaling) ---
+// --- INTERACTIVE LOGIC ---
 noBtn.addEventListener('click', (e) => {
     noClicks++;
-    triggerSparkles(e);
-
+    
     if (noClicks < maxTaps) {
-        // Yes bada hoga (+25% size) aur No chota hoga (-10% size)
-        noScale -= 0.08;
-        yesScale += 0.25;
-        noBtn.style.transform = `scale(${noScale})`;
-        yesBtn.style.transform = `scale(${yesScale})`;
-    } else {
-        // 10th click par No gayab aur Yes final bada
+        // Scaling Logic
+        noScale -= 0.1; // 10% chota
+        yesScale += 0.3; // 30% bada (Impactful scaling)
+        
+        noBtn.style.setProperty('transform', `scale(${noScale})`, 'important');
+        yesBtn.style.setProperty('transform', `scale(${yesScale})`, 'important');
+    } 
+    
+    // 10th Tap: Reset YES and Hide NO
+    if (noClicks >= maxTaps) {
         noBtn.style.display = "none";
-        yesBtn.style.transform = `scale(${yesScale + 0.3})`;
+        // Yes button wapas normal size mein aur center mein
+        yesBtn.style.setProperty('transform', 'scale(1)', 'important');
     }
 });
 
 // YES BUTTON LOGIC
 yesBtn.addEventListener('click', (e) => {
     triggerSparkles(e);
+    // Hide Choice Container
     choiceContainer.style.display = "none";
+    // Show Final Button
     nextBtn.style.display = "inline-block";
     setTimeout(() => {
         nextBtn.classList.add("show-btn");
