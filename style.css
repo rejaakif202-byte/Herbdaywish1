@@ -1,4 +1,6 @@
-/* Font Declarations */
+/* =========================================
+   1. Font Declarations
+   ========================================= */
 @font-face {
     font-family: 'Signatra';
     src: url('Signatra.ttf') format('opentype');
@@ -8,12 +10,16 @@
     src: url('BerlinSmallCaps.ttf') format('truetype');
 }
 
-/* Global Styles */
+/* =========================================
+   2. Global Styles & Background
+   ========================================= */
 body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)), url("file_00000000f42c620a987754adeca98283.png");
+    /* Overlay + Background Image */
+    background: linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)), 
+                url("file_00000000f42c620a987754adeca98283.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -24,7 +30,9 @@ body {
     overflow-x: hidden;
 }
 
-/* Password Page Overlay */
+/* =========================================
+   3. Password Page Overlay
+   ========================================= */
 #password-overlay {
     position: fixed;
     top: 0;
@@ -57,17 +65,19 @@ body {
     margin-bottom: 15px;
 }
 
-/* Main Content Container */
+/* =========================================
+   4. Main Content Layout
+   ========================================= */
 .container {
     width: 100%;
-    display: none; 
+    display: none; /* Initially hidden for password check */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-/* White Box */
 .content-box {
     background: white;
     padding: 25px 15px;
@@ -82,7 +92,7 @@ body {
     align-items: center;
 }
 
-/* Headline */
+/* Headline Styling */
 #title {
     font-family: 'Signatra', serif;
     font-size: 36px;
@@ -104,7 +114,7 @@ body {
 }
 #title.underline-grow::after { width: 100%; }
 
-/* Paragraph - WORD BREAK PROTECTION */
+/* Paragraph Styling */
 #para {
     font-family: 'BerlinSmallCaps', sans-serif;
     font-size: 18px;
@@ -112,32 +122,32 @@ body {
     line-height: 1.6;
     text-align: center;
     width: 100%;
-    word-break: keep-all !important;
-    overflow-wrap: normal !important;
-    display: block;
+    margin-bottom: 10px;
 }
 
-/* LETTER ANIMATION CLASSES (VERY IMPORTANT) */
-/* Pehle spans invisible honge */
+/* =========================================
+   5. Word-Safe Letter Animation
+   ========================================= */
 .reveal-span {
     display: inline-block;
     opacity: 0;
     transform: translateY(10px);
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     white-space: pre; 
     color: black;
 }
 
-/* Jab reveal class add hogi tab letters show honge */
 .reveal-span.reveal {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
 
-/* Next Page Button */
+/* =========================================
+   6. Buttons Styling
+   ========================================= */
 .button {
     margin-top: 25px;
-    padding: 12px 35px;
+    padding: 12px 30px;
     background: #ff4d6d;
     color: white !important;
     text-decoration: none;
@@ -147,23 +157,44 @@ body {
     font-weight: bold;
     border: none;
     cursor: pointer;
+    display: inline-block;
     opacity: 0; 
     transform: translateY(25px);
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: opacity 0.6s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Special Button Reveal */
 .button.show-btn {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
 
-.button:hover {
+/* Confession Page Yes/No Box */
+.choice-box {
+    display: none;
+    margin-top: 25px;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 120px;
+    position: relative;
+}
+
+/* Specific Colors for Yes/No */
+.btn-yes { background-color: #ff4d6d !important; }
+.btn-no { background-color: #555 !important; }
+
+/* Normal Hover Effect (Disabled for Yes/No to avoid JS conflict) */
+.button:not(#yesBtn):not(#noBtn):hover {
     transform: scale(1.08);
     background: #ff758c;
     box-shadow: 0 12px 25px rgba(255, 77, 109, 0.5);
 }
 
-/* Footer Styling */
+/* =========================================
+   7. Footer Styling
+   ========================================= */
 .footer {
     margin-top: 30px;
     color: black;
