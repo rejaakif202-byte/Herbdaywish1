@@ -1,102 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Your Thoughts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Thoughts 👀</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <style>
-        .feedback-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-top: 40px;
-        }
-
         .content-box {
-            text-align: center;
-        }
-
-        .content-box p {
-            margin-top: 8px;
-        }
-
-        form {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        #feedbackForm {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         textarea {
-            width: 280px;
-            height: 110px;
-            border-radius: 15px;
-            padding: 10px;
-            border: none;
+            width: 90%;
+            max-width: 350px;
+            height: 120px;
+            border-radius: 20px;
+            padding: 15px;
+            border: 2px solid #ff4d6d;
             outline: none;
-            font-family: inherit;
+            font-family: 'BerlinSmallCaps', sans-serif;
+            font-size: 16px;
+            margin-top: 15px;
+            resize: none;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .button {
-            padding: 12px 30px;
-            cursor: pointer;
+        #submitBtn {
             border: none;
-            background: white;
-            color: #5e2b97;
-            border-radius: 40px;
-            font-weight: bold;
-            font-size: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: 0.3s;
-        }
-
-        .button:hover {
-            background: #ffb6c1;
-            color: white;
-        }
-
-        .footer {
-            margin-top: 20px;
-            text-align: center;
+            cursor: pointer;
+            display: inline-block;
         }
     </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="container" style="display: flex;">
 
-    <div class="feedback-wrapper">
-
-        <div class="content-box">
-            <h1>Share Your Feeling Babe 👀</h1>
-            <p>Tell me how you felt about this little surprise.</p>
-        </div>
-
-        <form 
-            id="feedbackForm"
-            action="https://formsubmit.co/ban2sarkar123@gmail.com" 
-            method="POST"
-        >
-
+    <div class="content-box">
+        <h1 id="title">Share Your Feeling Babe 👀</h1>
+        <p id="para">Tell me how you felt about this little surprise.</p>
+        
+        <form id="feedbackForm" action="https://formsubmit.co/ban2sarkar123@gmail.com" method="POST">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_subject" value="New Feedback Received 💌">
             <input type="hidden" name="_template" value="table">
 
-            <textarea 
-                id="feedbackText"
-                name="message"
-                placeholder="Write your thoughts here..."
-                required></textarea>
-
-            <button type="submit" id="submitBtn" class="button">
-                Submit
-            </button>
-
+            <textarea id="feedbackText" name="message" placeholder="Yaha likho meri jaan..." required></textarea>
+            
+            <button type="submit" id="submitBtn" class="button">submit here cutie 👀💋</button>
         </form>
-
     </div>
 
     <div class="footer">Forever Yours My Sweetheart 💋</div>
@@ -104,102 +67,104 @@
 </div>
 
 <script>
-// --- Sparkle Animation Function ---
+// --- Confetti Sparkle Logic ---
 function triggerSparkles(event) {
-    const star = confetti.shapeFromPath({ path: 'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z' });
-
     confetti({
-        shapes: [star],
-        particleCount: 30,
-        spread: 90,
-        origin: {
-            x: event.clientX / window.innerWidth,
-            y: event.clientY / window.innerHeight
-        },
-        colors: ['#ff4d6d', '#ffb6c1', '#ffd700', '#5e2b97'],
-        ticks: 200,
-        gravity: 1.2,
-        scalar: 0.8,
-        drift: 0
+        particleCount: 50,
+        spread: 70,
+        origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
+        colors: ['#ff4d6d', '#ffffff', '#ffd700']
     });
 }
 
-// --- Letter Animation Logic ---
-function animateLetters(element, delayStart = 0) {
-    const text = element.textContent.trim();
-    element.textContent = "";
-    element.classList.add("started");
+// --- WORD-SAFE LETTER ANIMATION ---
+function animateLetters(el, callback) {
+    const originalText = el.innerText || el.textContent;
+    el.innerHTML = ""; 
 
-    const letters = [...text]; 
+    const words = originalText.split(" ");
+    
+    words.forEach((word, wordIndex) => {
+        const wordWrapper = document.createElement("span");
+        wordWrapper.style.display = "inline-block";
+        wordWrapper.style.whiteSpace = "nowrap"; 
 
-    letters.forEach((letter, index) => {
-        const span = document.createElement("span");
-        if (letter === " ") {
-            span.innerHTML = "&nbsp;";
-        } else {
-            span.textContent = letter;
+        [...word].forEach(char => {
+            const letterSpan = document.createElement("span");
+            letterSpan.innerHTML = char;
+            letterSpan.classList.add("reveal-span"); 
+            wordWrapper.appendChild(letterSpan);
+        });
+
+        el.appendChild(wordWrapper);
+
+        if (wordIndex < words.length - 1) {
+            const space = document.createElement("span");
+            space.innerHTML = "&nbsp;";
+            space.style.display = "inline-block";
+            el.appendChild(space);
         }
-        span.style.display = "inline-flex";
-        span.style.opacity = "0";
-        span.style.transform = "translateY(10px)";
-        span.style.transition = "opacity 0.4s ease, transform 0.4s ease";
-        element.appendChild(span);
-
-        setTimeout(() => {
-            span.style.opacity = "1";
-            span.style.transform = "translateY(0)";
-        }, delayStart + index * 50);
     });
 
-    return delayStart + letters.length * 50;
+    const allLetters = el.querySelectorAll(".reveal-span");
+    let i = 0;
+    const interval = setInterval(() => {
+        if(i < allLetters.length) {
+            allLetters[i].classList.add("reveal"); 
+            i++;
+        } else {
+            clearInterval(interval);
+            if(callback) callback();
+        }
+    }, 30);
 }
 
-window.addEventListener("load", () => {
-    const title = document.querySelector(".content-box h1");
-    const paragraph = document.querySelector(".content-box p");
+// --- Animation Sequence ---
+window.onload = () => {
+    const t = document.getElementById("title");
+    const p = document.getElementById("para");
+    const b = document.getElementById("submitBtn");
 
-    if (title) {
-        let delayAfterTitle = animateLetters(title, 0);
+    animateLetters(t, () => {
+        t.classList.add("underline-grow");
         setTimeout(() => {
-            title.classList.add("underline-grow");
-            if (paragraph) {
-                setTimeout(() => {
-                    animateLetters(paragraph, 0);
-                }, 500); 
-            }
-        }, delayAfterTitle + 200);
+            animateLetters(p, () => {
+                b.classList.add("show-btn");
+            });
+        }, 600);
+    });
+};
+
+// --- Form Logic: Validation + Sparkles + Submit ---
+const form = document.getElementById('feedbackForm');
+const feedbackArea = document.getElementById('feedbackText');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', function(e) {
+    // 1. Check if empty
+    if (feedbackArea.value.trim() === "") {
+        e.preventDefault(); 
+        alert("Pehle kuch likho toh meri jaan! ✍️💖"); 
+        feedbackArea.focus(); 
+        return false;
     }
 
-    // --- Fixed Validation + Sparkle + Form Submit ---
-    const form = document.getElementById('feedbackForm');
-    const feedbackArea = document.getElementById('feedbackText');
-    const submitBtn = document.getElementById('submitBtn');
-
-    form.addEventListener('submit', function(e) {
-        // Validation check
-        if (feedbackArea.value.trim() === "") {
-            e.preventDefault();
-            alert("Pehle kuch likho toh meri jaan! ✍️💖");
-            feedbackArea.focus();
-            return false;
-        }
-
-        // Agar sab sahi hai toh sparkles dikhao aur fir submit karo
-        e.preventDefault(); 
-        triggerSparkles({
-            clientX: window.innerWidth / 2,
-            clientY: window.innerHeight / 2
-        }); 
-
-        // Button ko disable kar rahe hain taaki baar baar click na ho
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Sending...";
-
-        setTimeout(() => {
-            form.submit(); 
-        }, 1000);
+    // 2. If valid, show sparkles and submit
+    e.preventDefault(); 
+    
+    triggerSparkles({
+        clientX: window.innerWidth / 2,
+        clientY: window.innerHeight / 2
     });
+
+    submitBtn.innerText = "Sending... 💗";
+    submitBtn.disabled = true;
+
+    setTimeout(() => {
+        form.submit(); // Email send hoga aur site wahi khatam
+    }, 1200);
 });
 </script>
-    
+
+</body>
 </html>
