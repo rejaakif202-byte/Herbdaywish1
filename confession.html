@@ -6,6 +6,32 @@
     <title>Something From My Heart 💌</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Interactive Buttons Style */
+        .choice-box {
+            display: none; /* Text khatam hone tak hidden */
+            margin-top: 20px;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-yes { background-color: #ff4d6d !important; color: white !important; }
+        .btn-no { background-color: #555 !important; color: white !important; }
+
+        /* Final Next Button */
+        #nextBtn { 
+            display: none; 
+            margin-top: 25px; 
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+    </style>
 </head>
 <body>
 
@@ -17,6 +43,11 @@
         <p id="para">
             ᴛʜᴇʀᴇ’ꜱ ꜱᴏᴍᴇᴛʜɪɴɢ ɪ ᴀʟᴡᴀʏꜱ ᴡᴀɴᴛᴇᴅ ᴛᴏ ꜱᴀʏ... ᴀɴꜱʜɪ, ᴀᴀᴘ ᴍᴇʀɪ ʟɪꜰᴇ ᴋᴀ ᴡᴏ ʜɪꜱꜱᴀ ʜᴏ ᴊɪꜱᴋᴇ ʙɪɴᴀ ᴍᴇɪɴ ᴀᴅʜᴜʀᴀ ʜᴜɴ 😭❤️. ʜᴀʀ ᴘᴀʟ, ʜᴀʀ ᴅɪɴ ʙᴀꜱ ᴀᴀᴘᴋᴀ ʜɪ ᴋʜᴀʏᴀʟ ʀᴇʜᴛᴀ ʜᴀɪ. ʏᴇ ᴄᴏɴꜰᴇꜱꜱɪᴏɴ ꜱɪʀꜰ ᴇᴋ ᴍᴇꜱꜱᴀɢᴇ ɴᴀʜɪ, ᴍᴇʀᴇ ᴅɪʟ ᴋɪ ᴅʜᴀᴅᴋᴀɴ ʜᴀɪ 😭👉👈. ɪ ʀᴇᴀʟʟʏ ʟᴏᴠᴇ ʏᴏᴜ ᴍᴏʀᴇ ᴛʜᴀɴ ᴀɴʏᴛʜɪɴɢ! 💗🎀
         </p>
+
+        <div id="choiceContainer" class="choice-box">
+            <button id="yesBtn" class="button show-btn btn-yes">yes 👀💋</button>
+            <button id="noBtn" class="button show-btn btn-no">no 🙂‍↔️</button>
+        </div>
     </div>
 
     <a href="feedback.html" class="button" id="nextBtn">ek akhri chiz 👀</a>
@@ -25,26 +56,25 @@
 </div>
 
 <script>
-// --- Confetti Sparkle Logic ---
+let noClicks = 0;
+let yesScale = 1;
+let noScale = 1;
+
 function triggerSparkles(event) {
     confetti({
-        particleCount: 50,
-        spread: 70,
+        particleCount: 60,
+        spread: 80,
         origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
         colors: ['#ff4d6d', '#ffffff', '#ffd700']
     });
 }
 
-// --- WORD-SAFE LETTER ANIMATION ---
 function animateLetters(el, callback) {
     const originalText = el.innerText || el.textContent;
     el.innerHTML = ""; 
-
-    // Text ko words mein todna taaki word-break na ho
     const words = originalText.split(" ");
     
     words.forEach((word, wordIndex) => {
-        // Har word ke liye wrapper (inline-block)
         const wordWrapper = document.createElement("span");
         wordWrapper.style.display = "inline-block";
         wordWrapper.style.whiteSpace = "nowrap"; 
@@ -52,14 +82,12 @@ function animateLetters(el, callback) {
         [...word].forEach(char => {
             const letterSpan = document.createElement("span");
             letterSpan.innerHTML = char;
-            // 'reveal-span' class style.css se linked hai
             letterSpan.classList.add("reveal-span"); 
             wordWrapper.appendChild(letterSpan);
         });
 
         el.appendChild(wordWrapper);
 
-        // Space add karna
         if (wordIndex < words.length - 1) {
             const space = document.createElement("span");
             space.innerHTML = "&nbsp;";
@@ -72,7 +100,7 @@ function animateLetters(el, callback) {
     let i = 0;
     const interval = setInterval(() => {
         if(i < allLetters.length) {
-            allLetters[i].classList.add("reveal"); // CSS animation trigger
+            allLetters[i].classList.add("reveal"); 
             i++;
         } else {
             clearInterval(interval);
@@ -81,34 +109,62 @@ function animateLetters(el, callback) {
     }, 30);
 }
 
-// --- Animation Sequence ---
 window.onload = () => {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
-    const b = document.getElementById("nextBtn");
+    const choices = document.getElementById("choiceContainer");
 
-    // Start: Title letter by letter
     animateLetters(t, () => {
-        // Show Underline (class from style.css)
         t.classList.add("underline-grow");
-        
         setTimeout(() => {
-            // Start: Paragraph letter by letter
             animateLetters(p, () => {
-                // Finally: Show Button
-                b.classList.add("show-btn");
+                // Paragraph khatam hone ke baad buttons show honge
+                choices.style.display = "flex";
             });
         }, 700);
     });
 };
 
-// --- Button Interaction ---
-document.getElementById('nextBtn').addEventListener('click', function(e) {
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const nextBtn = document.getElementById('nextBtn');
+const choiceContainer = document.getElementById('choiceContainer');
+
+// NO BUTTON LOGIC
+noBtn.addEventListener('click', (e) => {
+    noClicks++;
+    triggerSparkles(e); // Chota sa effect har click par
+
+    if (noClicks < 20) {
+        // No button chota hoga, Yes bada hoga
+        noScale -= 0.045;
+        yesScale += 0.15;
+        noBtn.style.transform = `scale(${noScale})`;
+        yesBtn.style.transform = `scale(${yesScale})`;
+    } else {
+        // 20 clicks ke baad NO gayab, sirf bada YES reh jayega
+        noBtn.style.display = "none";
+        yesBtn.style.transform = `scale(${yesScale + 0.5})`;
+    }
+});
+
+// YES BUTTON LOGIC
+yesBtn.addEventListener('click', (e) => {
+    triggerSparkles(e);
+    // Buttons ko gayab karo aur final button dikhao
+    choiceContainer.style.display = "none";
+    nextBtn.style.display = "inline-block";
+    setTimeout(() => {
+        nextBtn.classList.add("show-btn");
+    }, 100);
+});
+
+// Final Button Redirect
+nextBtn.addEventListener('click', function(e) {
     triggerSparkles(e);
     e.preventDefault();
-    const url = this.getAttribute('href');
     setTimeout(() => {
-        window.location.href = url;
+        window.location.href = this.href;
     }, 600);
 });
 </script>
