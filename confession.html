@@ -9,27 +9,31 @@
     <style>
         /* Interactive Buttons Style */
         .choice-box {
-            display: none; /* Text khatam hone tak hidden */
-            margin-top: 20px;
-            gap: 15px;
+            display: none; /* Text reveal hone tak hidden */
+            margin-top: 25px;
+            gap: 20px;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
+            min-height: 120px; /* Space for growing button */
         }
 
-        .btn-yes { background-color: #ff4d6d !important; color: white !important; }
-        .btn-no { background-color: #555 !important; color: white !important; }
+        .btn-yes { 
+            background-color: #ff4d6d !important; 
+            color: white !important; 
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        
+        .btn-no { 
+            background-color: #555 !important; 
+            color: white !important; 
+            transition: transform 0.2s ease; 
+        }
 
         /* Final Next Button */
         #nextBtn { 
             display: none; 
             margin-top: 25px; 
-            animation: bounce 1s infinite alternate;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-5px); }
         }
     </style>
 </head>
@@ -52,18 +56,19 @@
 
     <a href="feedback.html" class="button" id="nextBtn">ek akhri chiz 👀</a>
 
-    <div class="footer">Be Mine Sweetheart 👉👈 • Hope You Like It 😭</div>
+    <div class="footer">be mine sweetheart 👉👈💋</div>
 </div>
 
 <script>
 let noClicks = 0;
+const maxTaps = 10; // Logic updated to 10 taps
 let yesScale = 1;
 let noScale = 1;
 
 function triggerSparkles(event) {
     confetti({
-        particleCount: 60,
-        spread: 80,
+        particleCount: 50,
+        spread: 70,
         origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
         colors: ['#ff4d6d', '#ffffff', '#ffd700']
     });
@@ -106,7 +111,7 @@ function animateLetters(el, callback) {
             clearInterval(interval);
             if(callback) callback();
         }
-    }, 30);
+    }, 25);
 }
 
 window.onload = () => {
@@ -118,10 +123,9 @@ window.onload = () => {
         t.classList.add("underline-grow");
         setTimeout(() => {
             animateLetters(p, () => {
-                // Paragraph khatam hone ke baad buttons show honge
                 choices.style.display = "flex";
             });
-        }, 700);
+        }, 600);
     });
 };
 
@@ -130,28 +134,27 @@ const noBtn = document.getElementById('noBtn');
 const nextBtn = document.getElementById('nextBtn');
 const choiceContainer = document.getElementById('choiceContainer');
 
-// NO BUTTON LOGIC
+// --- NO BUTTON LOGIC (Aggressive Scaling) ---
 noBtn.addEventListener('click', (e) => {
     noClicks++;
-    triggerSparkles(e); // Chota sa effect har click par
+    triggerSparkles(e);
 
-    if (noClicks < 20) {
-        // No button chota hoga, Yes bada hoga
-        noScale -= 0.045;
-        yesScale += 0.15;
+    if (noClicks < maxTaps) {
+        // Yes bada hoga (+25% size) aur No chota hoga (-10% size)
+        noScale -= 0.08;
+        yesScale += 0.25;
         noBtn.style.transform = `scale(${noScale})`;
         yesBtn.style.transform = `scale(${yesScale})`;
     } else {
-        // 20 clicks ke baad NO gayab, sirf bada YES reh jayega
+        // 10th click par No gayab aur Yes final bada
         noBtn.style.display = "none";
-        yesBtn.style.transform = `scale(${yesScale + 0.5})`;
+        yesBtn.style.transform = `scale(${yesScale + 0.3})`;
     }
 });
 
 // YES BUTTON LOGIC
 yesBtn.addEventListener('click', (e) => {
     triggerSparkles(e);
-    // Buttons ko gayab karo aur final button dikhao
     choiceContainer.style.display = "none";
     nextBtn.style.display = "inline-block";
     setTimeout(() => {
