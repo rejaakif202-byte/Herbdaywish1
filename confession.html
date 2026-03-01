@@ -1,116 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Something From My Heart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Something From My Heart 💌</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-<div class="container">
+<div class="container" style="display: flex;">
 
     <div class="content-box">
-        <h1>One Confession 💌</h1>
-        <p>
-            There’s something I always wanted to say...
+        <h1 id="title">One Confession 💌</h1>
+        
+        <p id="para">
+            ᴛʜᴇʀᴇ’ꜱ ꜱᴏᴍᴇᴛʜɪɴɢ ɪ ᴀʟᴡᴀʏꜱ ᴡᴀɴᴛᴇᴅ ᴛᴏ ꜱᴀʏ... ᴀɴꜱʜɪ, ᴀᴀᴘ ᴍᴇʀɪ ʟɪꜰᴇ ᴋᴀ ᴡᴏ ʜɪꜱꜱᴀ ʜᴏ ᴊɪꜱᴋᴇ ʙɪɴᴀ ᴍᴇɪɴ ᴀᴅʜᴜʀᴀ ʜᴜɴ 😭❤️. ʜᴀʀ ᴘᴀʟ, ʜᴀʀ ᴅɪɴ ʙᴀꜱ ᴀᴀᴘᴋᴀ ʜɪ ᴋʜᴀʏᴀʟ ʀᴇʜᴛᴀ ʜᴀɪ. ʏᴇ ᴄᴏɴꜰᴇꜱꜱɪᴏɴ ꜱɪʀꜰ ᴇᴋ ᴍᴇꜱꜱᴀɢᴇ ɴᴀʜɪ, ᴍᴇʀᴇ ᴅɪʟ ᴋɪ ᴅʜᴀᴅᴋᴀɴ ʜᴀɪ 😭👉👈. ɪ ʀᴇᴀʟʟʏ ʟᴏᴠᴇ ʏᴏᴜ ᴍᴏʀᴇ ᴛʜᴀɴ ᴀɴʏᴛʜɪɴɢ! 💗🎀
         </p>
     </div>
 
-    <a href="feedback.html" class="button">EK AKHRI CHIZ 👀</a>
+    <a href="feedback.html" class="button" id="nextBtn">ek akhri chiz 👀</a>
 
     <div class="footer">Be Mine Sweetheart 👉👈 • Hope You Like It 😭</div>
 </div>
 
-</body>
-
 <script>
-// --- Sparkle Animation Function ---
+// --- Confetti Sparkle Logic ---
 function triggerSparkles(event) {
-    const star = confetti.shapeFromPath({ path: 'M12 1.74l3.09 6.25 6.91 1-5 4.87 1.18 6.88-6.18-3.25-6.18 3.25 1.18-6.88-5-4.87 6.91-1z' });
-
     confetti({
-        shapes: [star],
-        particleCount: 25,
-        spread: 80,
-        origin: {
-            x: event.clientX / window.innerWidth,
-            y: event.clientY / window.innerHeight
-        },
-        colors: ['#ff4d6d', '#ffb6c1', '#ffd700', '#5e2b97'],
-        ticks: 200,
-        gravity: 1.2,
-        scalar: 0.8,
-        drift: 0
+        particleCount: 50,
+        spread: 70,
+        origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
+        colors: ['#ff4d6d', '#ffffff', '#ffd700']
     });
 }
 
-function animateLetters(element, delayStart = 0) {
-    const text = element.textContent.trim();
-    element.textContent = "";
+// --- WORD-SAFE LETTER ANIMATION ---
+function animateLetters(el, callback) {
+    const originalText = el.innerText || el.textContent;
+    el.innerHTML = ""; 
+
+    // Text ko words mein todna taaki word-break na ho
+    const words = originalText.split(" ");
     
-    element.classList.add("started");
+    words.forEach((word, wordIndex) => {
+        // Har word ke liye wrapper (inline-block)
+        const wordWrapper = document.createElement("span");
+        wordWrapper.style.display = "inline-block";
+        wordWrapper.style.whiteSpace = "nowrap"; 
 
-    const letters = [...text]; 
+        [...word].forEach(char => {
+            const letterSpan = document.createElement("span");
+            letterSpan.innerHTML = char;
+            // 'reveal-span' class style.css se linked hai
+            letterSpan.classList.add("reveal-span"); 
+            wordWrapper.appendChild(letterSpan);
+        });
 
-    letters.forEach((letter, index) => {
-        const span = document.createElement("span");
+        el.appendChild(wordWrapper);
 
-        if (letter === " ") {
-            span.innerHTML = "&nbsp;";
-        } else {
-            span.textContent = letter;
+        // Space add karna
+        if (wordIndex < words.length - 1) {
+            const space = document.createElement("span");
+            space.innerHTML = "&nbsp;";
+            space.style.display = "inline-block";
+            el.appendChild(space);
         }
-
-        span.style.display = "inline-flex";
-        span.style.opacity = "0";
-        span.style.transform = "translateY(10px)";
-        span.style.transition = "opacity 0.4s ease, transform 0.4s ease";
-        span.style.margin = "0";
-
-        element.appendChild(span);
-
-        setTimeout(() => {
-            span.style.opacity = "1";
-            span.style.transform = "translateY(0)";
-        }, delayStart + index * 50);
     });
 
-    return delayStart + letters.length * 50;
+    const allLetters = el.querySelectorAll(".reveal-span");
+    let i = 0;
+    const interval = setInterval(() => {
+        if(i < allLetters.length) {
+            allLetters[i].classList.add("reveal"); // CSS animation trigger
+            i++;
+        } else {
+            clearInterval(interval);
+            if(callback) callback();
+        }
+    }, 30);
 }
 
-window.addEventListener("load", () => {
-    const title = document.querySelector(".content-box h1");
-    const paragraph = document.querySelector(".content-box p");
+// --- Animation Sequence ---
+window.onload = () => {
+    const t = document.getElementById("title");
+    const p = document.getElementById("para");
+    const b = document.getElementById("nextBtn");
 
-    if (title) {
-        let delayAfterTitle = animateLetters(title, 0);
-
+    // Start: Title letter by letter
+    animateLetters(t, () => {
+        // Show Underline (class from style.css)
+        t.classList.add("underline-grow");
+        
         setTimeout(() => {
-            title.classList.add("underline-grow");
-            
-            if (paragraph) {
-                setTimeout(() => {
-                    animateLetters(paragraph, 0);
-                }, 500); 
-            }
-        }, delayAfterTitle + 200);
-    }
-
-    // --- Button Click Event for Sparkles ---
-    document.querySelectorAll('.button, button').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            triggerSparkles(e);
-
-            if (btn.tagName === 'A') {
-                e.preventDefault();
-                const url = btn.getAttribute('href');
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 400); 
-            }
-        });
+            // Start: Paragraph letter by letter
+            animateLetters(p, () => {
+                // Finally: Show Button
+                b.classList.add("show-btn");
+            });
+        }, 700);
     });
+};
+
+// --- Button Interaction ---
+document.getElementById('nextBtn').addEventListener('click', function(e) {
+    triggerSparkles(e);
+    e.preventDefault();
+    const url = this.getAttribute('href');
+    setTimeout(() => {
+        window.location.href = url;
+    }, 600);
 });
 </script>
-    
+
+</body>
 </html>
