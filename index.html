@@ -6,22 +6,30 @@
     <title>MyJaanAnshi</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Ensuring text is invisible but "exists" for the script to read */
+        #title, #para {
+            opacity: 0 !important;
+            filter: alpha(opacity=0);
+            transition: none !important;
+        }
+    </style>
 </head>
 <body>
 
     <div id="password-overlay">
         <h2>Enter Your Secret Code 👀</h2>
-        <input type="password" id="passInput" placeholder="enter your password 👀">
+        <input type="password" id="passInput" placeholder="Yaha password likho...">
         <button class="button show-btn" onclick="checkPassword()">unlock surprise babe 👀</button>
     </div>
 
-    <div class="container" id="main-container">
+    <div class="container" id="main-container" style="display: none;">
         <div class="content-box">
-            <h1 id="title" style="visibility: hidden; opacity: 0;">Welcome My Jaan Anshi 👀💋</h1>
-            <p id="para" style="visibility: hidden; opacity: 0;">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
+            <h1 id="title">Welcome My Jaan Anshi 👀💋</h1>
+            <p id="para">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
         </div>
 
-        <a href="wish.html" class="button" id="nextBtn">yaha click karo 👀</a>
+        <a href="wish.html" class="button" id="nextBtn" style="display: none;">yaha click karo 👀</a>
 
         <div class="footer">a special msg 👀 • for my heart</div>
     </div>
@@ -31,9 +39,8 @@ const CORRECT_PASSWORD = "19031112";
 
 function triggerSparkles(event) {
     confetti({ 
-        particleCount: 50, 
-        spread: 70, 
-        origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
+        particleCount: 50, spread: 70, 
+        origin: { x: 0.5, y: 0.5 },
         colors: ['#ff4d6d', '#ffffff', '#ffd700']
     });
 }
@@ -48,8 +55,8 @@ function checkPassword() {
         setTimeout(() => {
             overlay.style.display = "none";
             container.style.display = "flex"; 
-            // Password hatne ke thodi der baad animation shuru hoga
-            setTimeout(startSequence, 200);
+            // Small delay to let browser render the container
+            setTimeout(startSequence, 300);
         }, 500);
     } else {
         alert("Galat password! 😤");
@@ -58,14 +65,14 @@ function checkPassword() {
 }
 
 function animateLetters(el, callback) {
-    const originalText = el.innerText;
+    const originalText = el.textContent || el.innerText;
     el.innerHTML = ""; 
     
-    // Yaha JavaScript element ko 'visible' karega jab animation shuru hoga
+    // FORCE VISIBILITY: Yahi wo line hai jo text dikhayegi
+    el.style.setProperty('opacity', '1', 'important');
     el.style.visibility = "visible";
-    el.style.opacity = "1";
 
-    const words = originalText.split(" ");
+    const words = originalText.trim().split(/\s+/);
     
     words.forEach((word, wordIndex) => {
         const wordWrapper = document.createElement("span");
@@ -75,7 +82,7 @@ function animateLetters(el, callback) {
         [...word].forEach(char => {
             const letterSpan = document.createElement("span");
             letterSpan.innerHTML = char;
-            letterSpan.classList.add("reveal-span"); 
+            letterSpan.className = "reveal-span"; // CSS class handles individual letter reveal
             wordWrapper.appendChild(letterSpan);
         });
 
@@ -99,7 +106,7 @@ function animateLetters(el, callback) {
             clearInterval(interval);
             if(callback) callback();
         }
-    }, 35);
+    }, 40);
 }
 
 function startSequence() {
@@ -107,14 +114,14 @@ function startSequence() {
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
 
-    // Sequence: Title -> Underline -> Paragraph -> Button
     animateLetters(t, () => {
         t.classList.add("underline-grow");
         setTimeout(() => {
             animateLetters(p, () => {
-                b.classList.add("show-btn");
+                b.style.display = "inline-block";
+                setTimeout(() => b.classList.add("show-btn"), 50);
             });
-        }, 800);
+        }, 700);
     });
 }
 
@@ -124,6 +131,5 @@ document.getElementById('nextBtn').addEventListener('click', function(e) {
     setTimeout(() => { window.location.href = this.href; }, 600);
 });
 </script>
-
 </body>
 </html>
