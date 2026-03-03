@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
+
     <div id="password-overlay">
         <h2>Enter Your Secret Code 👀</h2>
         <input type="password" id="passInput" placeholder="Yaha password likho...">
@@ -19,63 +20,123 @@
             <h1 id="title">Welcome My Jaan Anshi 👀💋</h1>
             <p id="para">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
         </div>
+
         <a href="wish.html" class="button" id="nextBtn">yaha click karo 👀</a>
+
         <div class="footer">a special msg 👀 • for my heart</div>
     </div>
 
 <script>
 const CORRECT_PASSWORD = "19031112";
 
+// Confetti Sparkles
 function triggerSparkles(event) {
-    confetti({ particleCount: 50, spread: 70, origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight }, colors: ['#ff4d6d', '#ffffff', '#ffd700'] });
+    confetti({ 
+        particleCount: 50, 
+        spread: 70, 
+        origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
+        colors: ['#ff4d6d', '#ffffff', '#ffd700']
+    });
 }
 
+// Password Logic
 function checkPassword() {
     const input = document.getElementById("passInput").value;
     const overlay = document.getElementById("password-overlay");
     const container = document.getElementById("main-container");
+
     if (input === CORRECT_PASSWORD) {
         overlay.style.opacity = "0";
-        setTimeout(() => { overlay.style.display = "none"; container.style.display = "flex"; startSequence(); }, 500);
-    } else { alert("Galat password! 😤"); document.getElementById("passInput").value = ""; }
+        setTimeout(() => {
+            overlay.style.display = "none";
+            container.style.display = "flex"; 
+            startSequence(); 
+        }, 500);
+    } else {
+        alert("Galat password! 😤");
+        document.getElementById("passInput").value = "";
+    }
 }
 
+// WORD-SAFE LETTER ANIMATION
 function animateLetters(el, callback) {
-    const originalText = el.innerText; el.innerHTML = "";
+    const originalText = el.innerText;
+    el.innerHTML = ""; 
+
     const words = originalText.split(" ");
+    
     words.forEach((word, wordIndex) => {
         const wordWrapper = document.createElement("span");
-        wordWrapper.style.display = "inline-block"; wordWrapper.style.whiteSpace = "nowrap"; 
+        wordWrapper.style.display = "inline-block"; 
+        wordWrapper.style.whiteSpace = "nowrap"; 
+
         [...word].forEach(char => {
-            const letterSpan = document.createElement("span"); letterSpan.innerHTML = char;
-            letterSpan.classList.add("reveal-span"); wordWrapper.appendChild(letterSpan);
+            const letterSpan = document.createElement("span");
+            letterSpan.innerHTML = char;
+            letterSpan.classList.add("reveal-span"); 
+            wordWrapper.appendChild(letterSpan);
         });
+
         el.appendChild(wordWrapper);
+
         if (wordIndex < words.length - 1) {
-            const space = document.createElement("span"); space.innerHTML = "&nbsp;"; space.style.display = "inline-block"; el.appendChild(space);
+            const space = document.createElement("span");
+            space.innerHTML = "&nbsp;";
+            space.style.display = "inline-block";
+            el.appendChild(space);
         }
     });
+
     const allLetters = el.querySelectorAll(".reveal-span");
     let i = 0;
     const interval = setInterval(() => {
-        if(i < allLetters.length) { allLetters[i].classList.add("reveal"); i++; }
-        else { clearInterval(interval); if(callback) callback(); }
+        if(i < allLetters.length) {
+            allLetters[i].classList.add("reveal"); 
+            i++;
+        } else {
+            clearInterval(interval);
+            if(callback) callback();
+        }
     }, 30);
 }
 
+// Animation order Fixed with Double Visibility Control
 function startSequence() {
-    const t = document.getElementById("title"); const p = document.getElementById("para"); const b = document.getElementById("nextBtn");
-    // REVEAL ON START
-    t.style.visibility = "visible"; t.style.opacity = "1";
-    p.style.visibility = "visible"; p.style.opacity = "1";
+    const t = document.getElementById("title");
+    const p = document.getElementById("para");
+    const b = document.getElementById("nextBtn");
+
+    // Fix: Pehle visibility aur opacity ko ON karenge tabhi animation dikhega
+    t.style.visibility = "visible";
+    t.style.opacity = "1"; 
+    
+    p.style.visibility = "visible";
+    p.style.opacity = "1";
+
     animateLetters(t, () => {
+        // Underline tabhi aayegi jab title reveal ho jayega
         t.classList.add("underline-grow");
-        setTimeout(() => { animateLetters(p, () => { b.classList.add("show-btn"); }); }, 700);
+        setTimeout(() => {
+            animateLetters(p, () => {
+                b.classList.add("show-btn");
+            });
+        }, 700);
     });
 }
 
-document.getElementById('nextBtn').addEventListener('click', function(e) { triggerSparkles(e); e.preventDefault(); setTimeout(() => { window.location.href = this.href; }, 600); });
-document.querySelector('#password-overlay .button').addEventListener('click', (e) => { triggerSparkles(e); });
+// Sparkle on Button Click & Redirect
+document.getElementById('nextBtn').addEventListener('click', function(e) {
+    triggerSparkles(e);
+    e.preventDefault();
+    const url = this.href;
+    setTimeout(() => { window.location.href = url; }, 600);
+});
+
+// Sparkle for password button
+document.querySelector('#password-overlay .button').addEventListener('click', (e) => {
+    triggerSparkles(e);
+});
 </script>
+
 </body>
 </html>
