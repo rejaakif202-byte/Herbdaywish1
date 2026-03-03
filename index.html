@@ -29,7 +29,6 @@
 <script>
 const CORRECT_PASSWORD = "19031112";
 
-// Confetti Sparkles Logic
 function triggerSparkles(event) {
     confetti({ 
         particleCount: 50, 
@@ -39,7 +38,6 @@ function triggerSparkles(event) {
     });
 }
 
-// Password Verification Logic
 function checkPassword() {
     const input = document.getElementById("passInput").value;
     const overlay = document.getElementById("password-overlay");
@@ -50,7 +48,8 @@ function checkPassword() {
         setTimeout(() => {
             overlay.style.display = "none";
             container.style.display = "flex"; 
-            startSequence(); // Animation yahan se trigger hoga
+            // Give it a tiny breath before starting animation
+            setTimeout(startSequence, 100);
         }, 500);
     } else {
         alert("Galat password! 😤");
@@ -58,12 +57,11 @@ function checkPassword() {
     }
 }
 
-// WORD-SAFE LETTER ANIMATION FUNCTION
 function animateLetters(el, callback) {
     const originalText = el.innerText;
     el.innerHTML = ""; 
     
-    // Animation start hote hi element ko visible karna
+    // Animation start hote hi element ko "Space" allocate kar dena but empty
     el.style.visibility = "visible";
     el.style.opacity = "1";
 
@@ -101,31 +99,27 @@ function animateLetters(el, callback) {
             clearInterval(interval);
             if(callback) callback();
         }
-    }, 30);
+    }, 35); // Slight speed adjustment for smoothness
 }
 
-// FINAL ANIMATION SEQUENCE
 function startSequence() {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
 
-    // Step 1: Headline start
+    // Sequence Start
     animateLetters(t, () => {
-        // Step 2: Underline draw karo headline ke baad
+        // Underline only after title is done
         t.classList.add("underline-grow");
-        
         setTimeout(() => {
-            // Step 3: Paragraph start karo underline aane ke thodi der baad
+            // Paragraph only after title underline
             animateLetters(p, () => {
-                // Step 4: Aakhir mein button reveal karo
                 b.classList.add("show-btn");
             });
-        }, 800); 
+        }, 800);
     });
 }
 
-// Sparkle on Button Click & Redirect
 document.getElementById('nextBtn').addEventListener('click', function(e) {
     triggerSparkles(e);
     e.preventDefault();
@@ -133,7 +127,6 @@ document.getElementById('nextBtn').addEventListener('click', function(e) {
     setTimeout(() => { window.location.href = url; }, 600);
 });
 
-// Sparkle for password button
 document.querySelector('#password-overlay .button').addEventListener('click', (e) => {
     triggerSparkles(e);
 });
