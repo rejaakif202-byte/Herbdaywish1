@@ -11,19 +11,18 @@
         .choice-box {
             display: none; 
             margin-top: 25px;
-            gap: 12px; /* Fixed gap for better spacing */
+            gap: 12px;
             justify-content: center;
             align-items: center;
             width: 100%;
             min-height: 140px; 
             position: relative;
-            /* Box safety: taaki bada button content ko push na kare */
             overflow: visible; 
         }
 
         #yesBtn, #noBtn {
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease !important;
-            white-space: nowrap; /* Text line break nahi hoga */
+            white-space: nowrap;
             flex-shrink: 0;
         }
 
@@ -110,11 +109,19 @@ function animateLetters(el, callback) {
     }, 25);
 }
 
+// Sequence trigger with Visibility Fix
 window.onload = () => {
-    animateLetters(document.getElementById("title"), () => {
-        document.getElementById("title").classList.add("underline-grow");
+    const t = document.getElementById("title");
+    const p = document.getElementById("para");
+
+    // Fix: Show containers before animation
+    t.style.opacity = "1";
+    p.style.opacity = "1";
+
+    animateLetters(t, () => {
+        t.classList.add("underline-grow");
         setTimeout(() => {
-            animateLetters(document.getElementById("para"), () => {
+            animateLetters(p, () => {
                 document.getElementById("choiceContainer").style.display = "flex";
             });
         }, 600);
@@ -126,36 +133,32 @@ const noBtn = document.getElementById('noBtn');
 const nextBtn = document.getElementById('nextBtn');
 const choiceContainer = document.getElementById('choiceContainer');
 
-// --- INTERACTIVE LOGIC (REFINED) ---
+// INTERACTIVE LOGIC (0.09 Scaling Fixed)
 noBtn.addEventListener('click', (e) => {
     noClicks++;
     
     if (noClicks < maxTaps) {
-        // Fix 1 & 3: Yes bada hone ka rate kam kiya (0.12)
-        // No chota hone ka rate (0.08)
-        noScale -= 0.09; 
-        yesScale += 0.06; 
+        // Fix 1 & 3: Scaling Rate 0.09 for safety
+        noScale -= 0.07; 
+        yesScale += 0.09; 
         
         noBtn.style.setProperty('transform', `scale(${noScale})`, 'important');
         yesBtn.style.setProperty('transform', `scale(${yesScale})`, 'important');
         
-        // Fix 2: Dynamic gap adjustment taaki overlap na ho
+        // Fix 2: Dynamic gap to avoid overlap
         let currentGap = 12 + (noClicks * 5);
         choiceContainer.style.gap = currentGap + "px";
     } 
     
-    // Fix 4: 10th Tap: NO gayab, YES wapas center aur normal
+    // Fix 4: 10th Tap Hide logic
     if (noClicks >= maxTaps) {
         noBtn.style.display = "none";
-        // Reset scale but wait for click to proceed
         yesBtn.style.setProperty('transform', 'scale(1)', 'important');
     }
 });
 
-// YES BUTTON LOGIC
 yesBtn.addEventListener('click', (e) => {
     triggerSparkles(e);
-    // Jab tak YES click nahi hoga, nextBtn show nahi hoga
     choiceContainer.style.display = "none";
     nextBtn.style.display = "inline-block";
     setTimeout(() => {
@@ -163,7 +166,6 @@ yesBtn.addEventListener('click', (e) => {
     }, 100);
 });
 
-// Final Button Redirect
 nextBtn.addEventListener('click', function(e) {
     triggerSparkles(e);
     e.preventDefault();
