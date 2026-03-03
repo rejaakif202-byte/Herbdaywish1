@@ -42,7 +42,6 @@ function animateLetters(el, callback) {
     const words = originalText.split(" ");
     
     words.forEach((word, wordIndex) => {
-        // Protect words from breaking
         const wordWrapper = document.createElement("span");
         wordWrapper.style.display = "inline-block"; 
         wordWrapper.style.whiteSpace = "nowrap"; 
@@ -50,7 +49,6 @@ function animateLetters(el, callback) {
         [...word].forEach(char => {
             const letterSpan = document.createElement("span");
             letterSpan.innerHTML = char;
-            // Matches .reveal-span in CSS
             letterSpan.classList.add("reveal-span"); 
             wordWrapper.appendChild(letterSpan);
         });
@@ -69,7 +67,7 @@ function animateLetters(el, callback) {
     let i = 0;
     const interval = setInterval(() => {
         if(i < allLetters.length) {
-            allLetters[i].classList.add("reveal"); // Triggers CSS transition
+            allLetters[i].classList.add("reveal"); 
             i++;
         } else {
             clearInterval(interval);
@@ -78,11 +76,15 @@ function animateLetters(el, callback) {
     }, 25); 
 }
 
-// Sequence trigger
+// Sequence trigger with Opacity Fix
 window.onload = () => {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
+
+    // Reveal container before animation starts
+    t.style.opacity = "1";
+    p.style.opacity = "1";
 
     animateLetters(t, () => {
         t.classList.add("underline-grow");
