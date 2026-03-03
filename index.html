@@ -17,8 +17,8 @@
 
     <div class="container" id="main-container">
         <div class="content-box">
-            <h1 id="title">Welcome My Jaan Anshi 👀💋</h1>
-            <p id="para">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
+            <h1 id="title" style="visibility: hidden; opacity: 0;">Welcome My Jaan Anshi 👀💋</h1>
+            <p id="para" style="visibility: hidden; opacity: 0;">ꜰɪɴᴀʟʟʏ, ᴀᴀ ʜɪ ɢᴀʏᴇ ᴀᴀᴘ ʏᴀʜᴀ ᴘᴀʀ 👀. ᴀᴘᴋᴇ ʟɪʏᴇ ᴄʜᴏᴛᴀ ꜱᴀ ꜱᴜʀᴘʀɪꜱᴇ ʙᴀɴᴀʏᴀ ʜ ᴍᴀɪɴᴇ 😭👉👈, ꜱᴏ ɪ ᴡᴀɴᴛ ᴋɪ ᴀᴀᴘ ᴜꜱ ꜱᴜʀᴘʀɪꜱᴇ ᴋᴏ ᴅᴇᴋʜᴏ ᴀɴᴅ ʙᴀᴛᴀᴏ ᴋɪ ᴋᴀɪꜱᴀ ʟᴀɢᴀ 😭💗. ᴀᴀᴊ ꜱɪʀꜰ ᴀᴘᴋᴀ ʜɪ ꜱᴘᴇᴄɪᴀʟ ᴅᴀʏ ɴʜɪ ʜ 👀 ᴀᴀᴊ ᴍᴇʀᴇ ᴘʏᴀᴀʀɪ ꜱʜᴇʀɴɪ ᴋᴀ ᴊᴀɴᴀᴍᴅɪɴ ʜ😭💗🎀.</p>
         </div>
 
         <a href="wish.html" class="button" id="nextBtn">yaha click karo 👀</a>
@@ -29,7 +29,7 @@
 <script>
 const CORRECT_PASSWORD = "19031112";
 
-// Confetti Sparkles
+// Confetti Sparkles Logic
 function triggerSparkles(event) {
     confetti({ 
         particleCount: 50, 
@@ -39,7 +39,7 @@ function triggerSparkles(event) {
     });
 }
 
-// Password Logic
+// Password Verification Logic
 function checkPassword() {
     const input = document.getElementById("passInput").value;
     const overlay = document.getElementById("password-overlay");
@@ -50,7 +50,7 @@ function checkPassword() {
         setTimeout(() => {
             overlay.style.display = "none";
             container.style.display = "flex"; 
-            startSequence(); 
+            startSequence(); // Animation yahan se trigger hoga
         }, 500);
     } else {
         alert("Galat password! 😤");
@@ -58,10 +58,14 @@ function checkPassword() {
     }
 }
 
-// WORD-SAFE LETTER ANIMATION
+// WORD-SAFE LETTER ANIMATION FUNCTION
 function animateLetters(el, callback) {
     const originalText = el.innerText;
     el.innerHTML = ""; 
+    
+    // Animation start hote hi element ko visible karna
+    el.style.visibility = "visible";
+    el.style.opacity = "1";
 
     const words = originalText.split(" ");
     
@@ -100,27 +104,24 @@ function animateLetters(el, callback) {
     }, 30);
 }
 
-// Animation order Fixed with Double Visibility Control
+// FINAL ANIMATION SEQUENCE
 function startSequence() {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
 
-    // Fix: Pehle visibility aur opacity ko ON karenge tabhi animation dikhega
-    t.style.visibility = "visible";
-    t.style.opacity = "1"; 
-    
-    p.style.visibility = "visible";
-    p.style.opacity = "1";
-
+    // Step 1: Headline start
     animateLetters(t, () => {
-        // Underline tabhi aayegi jab title reveal ho jayega
+        // Step 2: Underline draw karo headline ke baad
         t.classList.add("underline-grow");
+        
         setTimeout(() => {
+            // Step 3: Paragraph start karo underline aane ke thodi der baad
             animateLetters(p, () => {
+                // Step 4: Aakhir mein button reveal karo
                 b.classList.add("show-btn");
             });
-        }, 700);
+        }, 800); 
     });
 }
 
