@@ -11,7 +11,7 @@
 
     <div id="password-overlay">
         <h2>Enter Your Secret Code 👀</h2>
-        <input type="password" id="passInput" placeholder="Yaha password likho...">
+        <input type="password" id="passInput" placeholder="enter your password 👀">
         <button class="button show-btn" onclick="checkPassword()">unlock surprise babe 👀</button>
     </div>
 
@@ -48,8 +48,8 @@ function checkPassword() {
         setTimeout(() => {
             overlay.style.display = "none";
             container.style.display = "flex"; 
-            // Give it a tiny breath before starting animation
-            setTimeout(startSequence, 100);
+            // Password hatne ke thodi der baad animation shuru hoga
+            setTimeout(startSequence, 200);
         }, 500);
     } else {
         alert("Galat password! 😤");
@@ -61,7 +61,7 @@ function animateLetters(el, callback) {
     const originalText = el.innerText;
     el.innerHTML = ""; 
     
-    // Animation start hote hi element ko "Space" allocate kar dena but empty
+    // Yaha JavaScript element ko 'visible' karega jab animation shuru hoga
     el.style.visibility = "visible";
     el.style.opacity = "1";
 
@@ -99,7 +99,7 @@ function animateLetters(el, callback) {
             clearInterval(interval);
             if(callback) callback();
         }
-    }, 35); // Slight speed adjustment for smoothness
+    }, 35);
 }
 
 function startSequence() {
@@ -107,12 +107,10 @@ function startSequence() {
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
 
-    // Sequence Start
+    // Sequence: Title -> Underline -> Paragraph -> Button
     animateLetters(t, () => {
-        // Underline only after title is done
         t.classList.add("underline-grow");
         setTimeout(() => {
-            // Paragraph only after title underline
             animateLetters(p, () => {
                 b.classList.add("show-btn");
             });
@@ -123,12 +121,7 @@ function startSequence() {
 document.getElementById('nextBtn').addEventListener('click', function(e) {
     triggerSparkles(e);
     e.preventDefault();
-    const url = this.href;
-    setTimeout(() => { window.location.href = url; }, 600);
-});
-
-document.querySelector('#password-overlay .button').addEventListener('click', (e) => {
-    triggerSparkles(e);
+    setTimeout(() => { window.location.href = this.href; }, 600);
 });
 </script>
 
