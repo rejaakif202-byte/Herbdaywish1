@@ -1,214 +1,38 @@
-/* =========================================
-   1. Font Declarations
-   ========================================= */
-@font-face {
-    font-family: 'Signatra';
-    src: url('Signatra.ttf') format('opentype');
-}
-@font-face {
-    font-family: 'BerlinSmallCaps';
-    src: url('BerlinSmallCaps.ttf') format('truetype');
-}
+@font-face { font-family: 'Signatra'; src: url('Signatra.ttf') format('opentype'); }
+@font-face { font-family: 'BerlinSmallCaps'; src: url('BerlinSmallCaps.ttf') format('truetype'); }
 
-/* =========================================
-   2. Global Styles & Background
-   ========================================= */
 body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)), 
-                url("file_00000000f42c620a987754adeca98283.png");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow-x: hidden;
+    margin: 0; padding: 0; min-height: 100vh;
+    background: linear-gradient(rgba(255, 105, 180, 0.3), rgba(219, 39, 119, 0.3)), url("file_00000000f42c620a987754adeca98283.png");
+    background-size: cover; background-position: center; background-attachment: fixed;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-x: hidden;
 }
 
-/* =========================================
-   3. Password Page Overlay
-   ========================================= */
 #password-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff0f5; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 100000;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff0f5; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100000;
 }
 
-#password-overlay h2 {
-    font-family: 'Signatra', serif;
-    font-size: 40px;
-    color: #ff4d6d;
-    margin-bottom: 20px;
+.container { width: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+.content-box { background: white; padding: 25px 15px; border-radius: 30px; width: 88%; max-width: 350px; box-shadow: 0 15px 45px rgba(0,0,0,0.2); text-align: center; position: relative; display: flex; flex-direction: column; align-items: center; }
+
+/* --- FIX: INITIAL HIDE (Text animation se pehle nahi dikhega) --- */
+#title, #para { 
+    visibility: hidden; 
+    opacity: 0; 
 }
 
-#passInput {
-    padding: 12px 20px;
-    border-radius: 25px;
-    border: 2px solid #ff4d6d;
-    font-family: 'BerlinSmallCaps', sans-serif;
-    text-align: center;
-    font-size: 18px;
-    outline: none;
-    margin-bottom: 15px;
-}
-
-/* =========================================
-   4. Main Content Layout (Initially Hidden)
-   ========================================= */
-.container {
-    width: 100%;
-    display: none; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.content-box {
-    background: white;
-    padding: 25px 15px;
-    border-radius: 30px;
-    width: 88%;
-    max-width: 350px;
-    box-shadow: 0 15px 45px rgba(0,0,0,0.2);
-    text-align: center;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* --- FIX: INITIAL HIDE --- */
-#title, #para {
-    opacity: 0; /* Page load hote hi text invisible rahega */
-}
-
-#title {
-    font-family: 'Signatra', serif;
-    font-size: 36px;
-    color: black;
-    display: inline-block;
-    position: relative;
-    margin: 0 auto 20px auto;
-}
-
-#title::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    height: 3px;
-    width: 0;
-    background: black;
-    transition: width 0.8s ease;
-}
+#title { font-family: 'Signatra', serif; font-size: 36px; color: black; position: relative; margin: 0 auto 20px auto; }
+#title::after { content: ""; position: absolute; left: 0; bottom: -5px; height: 3px; width: 0; background: black; transition: width 0.8s ease; }
 #title.underline-grow::after { width: 100%; }
 
-#para {
-    font-family: 'BerlinSmallCaps', sans-serif;
-    font-size: 18px;
-    color: black;
-    line-height: 1.6;
-    text-align: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
+#para { font-family: 'BerlinSmallCaps', sans-serif; font-size: 18px; color: black; line-height: 1.6; text-align: center; width: 100%; margin-bottom: 10px; }
 
-/* =========================================
-   5. Word-Safe Letter Animation
-   ========================================= */
-.reveal-span {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    white-space: pre; 
-    color: black;
-}
+.reveal-span { display: inline-block; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; white-space: pre; color: black; }
+.reveal-span.reveal { opacity: 1 !important; transform: translateY(0) !important; visibility: visible !important; }
 
-.reveal-span.reveal {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
+.button { margin-top: 25px; padding: 12px 30px; background: #ff4d6d; color: white !important; text-decoration: none; border-radius: 50px; font-family: 'BerlinSmallCaps', sans-serif; font-size: 18px; font-weight: bold; border: none; cursor: pointer; display: inline-block; opacity: 0; transform: translateY(25px); transition: opacity 0.6s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.button.show-btn { opacity: 1 !important; transform: translateY(0) !important; }
 
-/* =========================================
-   6. Buttons Styling
-   ========================================= */
-.button {
-    margin-top: 25px;
-    padding: 12px 30px;
-    background: #ff4d6d;
-    color: white !important;
-    text-decoration: none;
-    border-radius: 50px;
-    font-family: 'BerlinSmallCaps', sans-serif;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    opacity: 0; 
-    transform: translateY(25px);
-    transition: opacity 0.6s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.button.show-btn {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-
-.choice-box {
-    display: none;
-    margin-top: 25px;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 140px;
-    position: relative;
-}
-
-.btn-yes { background-color: #ff4d6d !important; }
-.btn-no { background-color: #555 !important; }
-
-/* Normal Hover for non-confession buttons */
-.button:not(#yesBtn):not(#noBtn):hover {
-    transform: scale(1.08);
-    background: #ff758c;
-    box-shadow: 0 12px 25px rgba(255, 77, 109, 0.5);
-}
-
-/* =========================================
-   7. Footer Styling
-   ========================================= */
-.footer {
-    margin-top: 30px;
-    color: black;
-    font-family: 'BerlinSmallCaps', sans-serif;
-    font-size: 20px;
-    font-weight: 900;
-    text-align: center;
-    width: 100%;
-}
-
-.footer::after {
-    content: "";
-    display: block;
-    width: 70%;
-    height: 3px;
-    background: black;
-    margin: 5px auto 0 auto;
-}
+.footer { margin-top: 30px; color: black; font-family: 'BerlinSmallCaps', sans-serif; font-size: 20px; font-weight: 900; text-align: center; width: 100%; }
+.footer::after { content: ""; display: block; width: 70%; height: 3px; background: black; margin: 5px auto 0 auto; }
