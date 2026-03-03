@@ -6,58 +6,168 @@
     <title>Your Thoughts 👀</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        .content-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #feedbackForm {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        textarea {
+            width: 90%;
+            max-width: 350px;
+            height: 120px;
+            border-radius: 20px;
+            padding: 15px;
+            border: 2px solid #ff4d6d;
+            outline: none;
+            font-family: 'BerlinSmallCaps', sans-serif;
+            font-size: 16px;
+            margin-top: 15px;
+            resize: none;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        #submitBtn {
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
+
 <div class="container" style="display: flex;">
+
     <div class="content-box">
-        <h1 id="title">Share Your Feeling Babe 👀</h1>
-        <p id="para">Tell me how you felt about this little surprise.</p>
+        <h1 id="title" style="visibility: hidden; opacity: 0;">Share Your Feeling Babe 👀</h1>
+        <p id="para" style="visibility: hidden; opacity: 0;">Tell me how you felt about this little surprise 😭💗.</p>
+        
         <form id="feedbackForm" action="https://formsubmit.co/ban2sarkar123@gmail.com" method="POST">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="New Feedback Received 💌">
+            <input type="hidden" name="_template" value="table">
+
             <textarea id="feedbackText" name="message" placeholder="Yaha likho meri jaan..." required></textarea>
+            
             <button type="submit" id="submitBtn" class="button">submit here cutie 👀💋</button>
         </form>
     </div>
+
     <div class="footer">Forever Yours My Sweetheart 💋</div>
+
 </div>
 
 <script>
-function triggerSparkles(event) { confetti({ particleCount: 50, spread: 70, origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight }, colors: ['#ff4d6d', '#ffffff', '#ffd700'] }); }
+// --- Confetti Sparkle Logic ---
+function triggerSparkles(event) {
+    confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight },
+        colors: ['#ff4d6d', '#ffffff', '#ffd700']
+    });
+}
 
+// --- WORD-SAFE LETTER ANIMATION ---
 function animateLetters(el, callback) {
-    const originalText = el.innerText || el.textContent; el.innerHTML = "";
+    const originalText = el.innerText || el.textContent;
+    el.innerHTML = ""; 
+
+    // Animation shuru hote hi visibility ON hogi
+    el.style.visibility = "visible";
+    el.style.opacity = "1";
+
     const words = originalText.split(" ");
+    
     words.forEach((word, wordIndex) => {
         const wordWrapper = document.createElement("span");
-        wordWrapper.style.display = "inline-block"; wordWrapper.style.whiteSpace = "nowrap"; 
+        wordWrapper.style.display = "inline-block";
+        wordWrapper.style.whiteSpace = "nowrap"; 
+
         [...word].forEach(char => {
-            const letterSpan = document.createElement("span"); letterSpan.innerHTML = char;
-            letterSpan.classList.add("reveal-span"); wordWrapper.appendChild(letterSpan);
+            const letterSpan = document.createElement("span");
+            letterSpan.innerHTML = char;
+            letterSpan.classList.add("reveal-span"); 
+            wordWrapper.appendChild(letterSpan);
         });
+
         el.appendChild(wordWrapper);
+
         if (wordIndex < words.length - 1) {
-            const space = document.createElement("span"); space.innerHTML = "&nbsp;"; space.style.display = "inline-block"; el.appendChild(space);
+            const space = document.createElement("span");
+            space.innerHTML = "&nbsp;";
+            space.style.display = "inline-block";
+            el.appendChild(space);
         }
     });
+
     const allLetters = el.querySelectorAll(".reveal-span");
     let i = 0;
     const interval = setInterval(() => {
-        if(i < allLetters.length) { allLetters[i].classList.add("reveal"); i++; }
-        else { clearInterval(interval); if(callback) callback(); }
+        if(i < allLetters.length) {
+            allLetters[i].classList.add("reveal"); 
+            i++;
+        } else {
+            clearInterval(interval);
+            if(callback) callback();
+        }
     }, 30);
 }
 
+// --- Animation Sequence FIXED ---
 window.onload = () => {
-    const t = document.getElementById("title"); const p = document.getElementById("para"); const b = document.getElementById("submitBtn");
-    t.style.visibility = "visible"; t.style.opacity = "1";
-    p.style.visibility = "visible"; p.style.opacity = "1";
+    const t = document.getElementById("title");
+    const p = document.getElementById("para");
+    const b = document.getElementById("submitBtn");
+
+    // Sequence: Headline -> Underline -> Paragraph -> Button
     animateLetters(t, () => {
         t.classList.add("underline-grow");
-        setTimeout(() => { animateLetters(p, () => { b.classList.add("show-btn"); }); }, 600);
+        setTimeout(() => {
+            animateLetters(p, () => {
+                b.classList.add("show-btn");
+            });
+        }, 800); // Wait for underline animation
     });
 };
 
+// --- Form Logic ---
 const form = document.getElementById('feedbackForm');
-form.addEventListener('submit', function(e) { e.preventDefault(); triggerSparkles({ clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 }); document.getElementById('submitBtn').innerText = "Sending... 💗"; setTimeout(() => { form.submit(); }, 1200); });
+const feedbackArea = document.getElementById('feedbackText');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', function(e) {
+    if (feedbackArea.value.trim() === "") {
+        e.preventDefault(); 
+        alert("Pehle kuch likho toh meri jaan! 👀💖"); 
+        feedbackArea.focus(); 
+        return false;
+    }
+
+    e.preventDefault(); 
+    
+    triggerSparkles({
+        clientX: window.innerWidth / 2,
+        clientY: window.innerHeight / 2
+    });
+
+    submitBtn.innerText = "Sending...💗";
+    submitBtn.disabled = true;
+
+    setTimeout(() => {
+        form.submit(); 
+    }, 1200);
+});
 </script>
+
 </body>
 </html>
