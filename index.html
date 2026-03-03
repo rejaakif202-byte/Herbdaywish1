@@ -58,32 +58,27 @@ function checkPassword() {
     }
 }
 
-// WORD-SAFE LETTER ANIMATION (Matches style.css)
+// WORD-SAFE LETTER ANIMATION
 function animateLetters(el, callback) {
     const originalText = el.innerText;
     el.innerHTML = ""; 
 
-    // Splitting by words to prevent word-break
     const words = originalText.split(" ");
     
     words.forEach((word, wordIndex) => {
-        // Wrapping each word in an inline-block span
         const wordWrapper = document.createElement("span");
         wordWrapper.style.display = "inline-block"; 
         wordWrapper.style.whiteSpace = "nowrap"; 
 
-        // Creating letters inside the word-wrapper
         [...word].forEach(char => {
             const letterSpan = document.createElement("span");
             letterSpan.innerHTML = char;
-            // Using reveal-span class for opacity control in CSS
             letterSpan.classList.add("reveal-span"); 
             wordWrapper.appendChild(letterSpan);
         });
 
         el.appendChild(wordWrapper);
 
-        // Space preservation
         if (wordIndex < words.length - 1) {
             const space = document.createElement("span");
             space.innerHTML = "&nbsp;";
@@ -92,12 +87,11 @@ function animateLetters(el, callback) {
         }
     });
 
-    // Selecting and revealing letters sequentially
     const allLetters = el.querySelectorAll(".reveal-span");
     let i = 0;
     const interval = setInterval(() => {
         if(i < allLetters.length) {
-            allLetters[i].classList.add("reveal"); // Triggers CSS transition
+            allLetters[i].classList.add("reveal"); 
             i++;
         } else {
             clearInterval(interval);
@@ -106,11 +100,15 @@ function animateLetters(el, callback) {
     }, 30);
 }
 
-// Animation order: Headline -> Underline -> Paragraph -> Button
+// Animation order Fixed with Opacity Control
 function startSequence() {
     const t = document.getElementById("title");
     const p = document.getElementById("para");
     const b = document.getElementById("nextBtn");
+
+    // Fix: Animation start hone se pehle visible karo
+    t.style.opacity = "1"; 
+    p.style.opacity = "1";
 
     animateLetters(t, () => {
         t.classList.add("underline-grow");
