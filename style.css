@@ -80,7 +80,7 @@ body {
 
 .content-box {
     background: white;
-    padding: 20px 10px;
+    padding: 20px 15px;
     border-radius: 30px;
     width: 88%;
     max-width: 300px;
@@ -101,7 +101,7 @@ body {
 
 #title {
     font-family: 'Signatra', serif;
-    font-size: 36px;
+    font-size: 30px;
     color: black;
     display: inline-block;
     position: relative;
